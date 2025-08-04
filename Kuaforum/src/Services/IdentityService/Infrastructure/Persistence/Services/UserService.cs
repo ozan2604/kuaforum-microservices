@@ -1,0 +1,68 @@
+﻿using Application.Abstractions.Servcies;
+using Application.Dtos.UserDtos;
+using Application.Exceptions;
+using Application.Features.Commands.AppUserCommands.CreateUser;
+using Azure.Core;
+using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Persistence.Services
+{
+    public class UserService : IUserService
+    {
+        readonly UserManager<AppUser> _userManager;
+
+        public UserService(UserManager<AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
+        public async Task<CreateUserResponseDto> CreateAsync(CreateUserDto createUserRequestDto)
+        {
+            IdentityResult result = await _userManager.CreateAsync(new()
+            {
+                Id = Guid.NewGuid(),
+                Email = createUserRequestDto.Email,
+                Name = createUserRequestDto.Name,
+                Surname = createUserRequestDto.Surname,
+                UserName = createUserRequestDto.UserName,
+                PhoneNumber = createUserRequestDto.PhoneNumber,
+                CreatedDate = DateTime.UtcNow,
+                IsActive = true,
+
+            }, createUserRequestDto.Password);
+
+            CreateUserResponseDto response = new() { Succeeded = result.Succeeded };
+
+
+            if (result.Succeeded)
+                response.Message = "Kullanıcı başarıyla oluşturuldu.";
+
+            else
+                foreach (var error in result.Errors)
+                {
+                    response.Message += $"{error.Code} - {error.Description}\n";
+                }
+
+            return response;
+        }
+
+        public async Task UpdateRefreshToken(string refreshToken, AppUser user, DateTime AccessTokenDate, int addOnAccessTokenDate)
+        {
+            if(user != null)
+            {
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenEndDate = AccessTokenDate.AddSeconds(addOnAccessTokenDate);
+                await _userManager.UpdateAsync(user);
+            }
+            else
+
+                throw new NotFoundUserException();
+        }
+    }
+}
