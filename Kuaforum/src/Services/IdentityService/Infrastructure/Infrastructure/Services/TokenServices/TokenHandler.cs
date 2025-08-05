@@ -1,8 +1,10 @@
 ﻿using Application.Abstractions.TokenServices;
 using Application.Dtos;
+using Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -17,7 +19,7 @@ namespace Infrastructure.Services.TokenServices
             _configuration = configuration;
         }
 
-        public Token CreateAccessToken(int second)
+        public Token CreateAccessToken(int second, AppUser appUser)
         {
             Token token = new();
 
@@ -35,7 +37,16 @@ namespace Infrastructure.Services.TokenServices
                 audience: _configuration["Jwt:Audience"],
                 expires: token.Expiration,  // tokeının süresi bu kadar olacak
                 notBefore: DateTime.UtcNow, // token olusturulur olusturulmaz devreye al
-                signingCredentials: signingCredentials  // securety key ise algoritma ile şifrelenmiş yukardaki key olacak
+                signingCredentials: signingCredentials,  // securety key ise algoritma ile şifrelenmiş yukardaki key olacak
+                claims: new List<Claim>
+                {
+                    new Claim("userId", appUser.Id.ToString()), // claim ekliyoruz
+                    new Claim("userName", appUser.UserName),
+                    new Claim("email", appUser.Email),
+                    new Claim("name", appUser.Name),
+                    new Claim("surname", appUser.Surname),
+                    new Claim("phoneNumber", appUser.PhoneNumber),
+                }
             );
 
             // Token olusturucu sınıfından bir örnek alalım

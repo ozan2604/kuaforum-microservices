@@ -2,6 +2,7 @@ using Application;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Persistence;
+using System.Security.Claims;
 using System.Text;
 using WebAPI.Extensions;
 
@@ -32,7 +33,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecurityKey"])),
 
-            LifetimeValidator = (notBefore, expires, token, parameters) => expires != null ? expires > DateTime.UtcNow : false// tokenýn süresi geçerli mi
+            LifetimeValidator = (notBefore, expires, token, parameters) => expires != null ? expires > DateTime.UtcNow : false,
+            // tokenýn süresi geçerli mi
+
+            NameClaimType = ClaimTypes.Name,
         };
     });
 
