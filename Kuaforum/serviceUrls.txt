@@ -1,0 +1,10 @@
+Identity service : https://localhost:7195
+Notification Service : https://localhost:7108
+Log Service : https://localhost:7181
+
+
+Api Gateway : https://localhost:7207
+
+
+
+

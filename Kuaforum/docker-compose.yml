@@ -1,0 +1,39 @@
+﻿version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-log-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1322Eson.
+      POSTGRES_DB: KuaforumLogServiceDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pglogdata:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  mssql-identity-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql-identity-db
+    restart: always
+    environment:
+      SA_PASSWORD: "Eson1322!aA"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - identitysql:/var/opt/mssql
+    networks:
+      - backend
+
+volumes:
+  pglogdata:
+  identitysql:
+
+networks:
+  backend:

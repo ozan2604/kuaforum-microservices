@@ -22,7 +22,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
     AddJwtBearer("Admin" ,options =>
     {
-        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+        options.TokenValidationParameters = new()
         {
             ValidateIssuer = true, // tokený kim daðýtýyor (biz)
             ValidateAudience = true, // tokený kim kullanýyor 
@@ -35,7 +35,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
 
             LifetimeValidator = (notBefore, expires, token, parameters) => expires != null ? expires > DateTime.UtcNow : false,
             // tokenýn süresi geçerli mi
-
+            ClockSkew = TimeSpan.Zero, // tokenýn süresi geçerli mi
             NameClaimType = ClaimTypes.Name,
         };
     });
