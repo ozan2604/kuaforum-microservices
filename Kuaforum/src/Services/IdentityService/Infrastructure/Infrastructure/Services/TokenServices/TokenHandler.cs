@@ -19,7 +19,7 @@ namespace Infrastructure.Services.TokenServices
             _configuration = configuration;
         }
 
-        public Token CreateAccessToken(int second, AppUser appUser)
+        public Token CreateAccessToken(int hour, AppUser appUser)
         {
             Token token = new();
 
@@ -31,7 +31,7 @@ namespace Infrastructure.Services.TokenServices
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             // token oluşturma ayarlarııı
-            token.Expiration = DateTime.UtcNow.AddSeconds(second);
+            token.Expiration = DateTime.UtcNow.AddHours(hour);
             JwtSecurityToken securityToken = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],

@@ -20,7 +20,7 @@ namespace Notification.WebAPI.Controllers
             try
             {
                 await _emailService.SendEmailAsync(
-                    new[] { "deneme@gmail.com" },
+                    new[] { "orhangolcur0@gmail.com" },
                     "Deneme Maili",
                     "Selam! Bu mail NotificationService üzerinden geldi.");
 

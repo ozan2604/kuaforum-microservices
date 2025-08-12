@@ -8,6 +8,7 @@ using Serilog.Context;
 using Serilog.Core;
 using Serilog.Sinks.PostgreSQL;
 using System.Text;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +17,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddLogPersistenceServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 
 Logger log = new LoggerConfiguration()
     .WriteTo.Console()
@@ -92,10 +96,13 @@ app.UseHttpsRedirection();
 app.UseAuthentication(); // kendimiz ekliyoruz
 app.UseAuthorization();
 
+
+
 app.Use(async (context, next) =>
 {
-    var username = context.User?.Identity?.IsAuthenticated !=null || true ? context.User?.Identity?.Name : null;
-    LogContext.PushProperty("user_name", username);
+    var username = context.User?.Identity?.IsAuthenticated != null || true ? context.User?.Identity?.Name : null;
+
+    Serilog.Context.LogContext.PushProperty("user_name", username);
     await next();
 });
 

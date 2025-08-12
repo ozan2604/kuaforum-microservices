@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
 using Notification.WebAPI;
 using System.Text;
@@ -11,7 +12,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddNotificationServices();
 
-builder.Services.AddAuthorization(ops => ops.AddPolicy("AdminPolicy",policy => policy.RequireClaim("Role", "Admin"))); //burasý deðiþecek
+builder.Services.AddAuthorization(//ops => ops.AddPolicy("AdminPolicy",policy => policy.RequireClaim("Role", "Admin"))
+); //burasý deðiþecek
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
     AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
     {
@@ -45,7 +47,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication(); // kendimiz ekliyoruz
 app.UseAuthorization();
 
-app.MapControllers()
-    .RequireAuthorization("AdminPolicy");  //burasý deðiþecek
+app.MapControllers();
+   /// .RequireAuthorization("AdminPolicy");  //burasý deðiþecek
 
 app.Run();

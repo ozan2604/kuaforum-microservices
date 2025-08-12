@@ -5,22 +5,39 @@ using Persistence;
 using System.Security.Claims;
 using System.Text;
 using WebAPI.Extensions;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
+
+
 
 builder.Services.AddControllers();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQ:Host"], "/", h =>
+        {
+            h.Username(builder.Configuration["RabbitMQ:Username"]);
+            h.Password(builder.Configuration["RabbitMQ:Password"]);
+        });
+    });
+});
+
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
-    AddJwtBearer("Admin" ,options =>
+    AddJwtBearer("Admin", options =>
     {
         options.TokenValidationParameters = new()
         {
@@ -42,7 +59,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -54,8 +71,9 @@ app.UseHttpsRedirection();
 
 
 
-app.UseAuthentication(); // kendimiz ekliyoruz
+// app.UseAuthentication(); // kendimiz ekliyoruz
 app.UseAuthorization();
+
 
 app.MapControllers();
 

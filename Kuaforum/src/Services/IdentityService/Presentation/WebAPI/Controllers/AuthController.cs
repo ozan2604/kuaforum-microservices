@@ -1,7 +1,7 @@
 ﻿using Application.Features.Commands.AppUserCommands.LoginUser;
 using Application.Features.Commands.AppUserCommands.RefreshTokenLogin;
+using MassTransit;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -12,9 +12,11 @@ namespace WebAPI.Controllers
     {
 
         private readonly IMediator _mediatr;
-        public AuthController(IMediator mediatr)
+        private readonly IPublishEndpoint _publishEndpoint;
+        public AuthController(IMediator mediatr, IPublishEndpoint publishEndpoint)
         {
             _mediatr = mediatr;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpPost("[action]")]
@@ -30,5 +32,6 @@ namespace WebAPI.Controllers
             RefreshTokenLoginCommandResponse response = await _mediatr.Send(request);
             return Ok(response);
         }
+        
     }
 }

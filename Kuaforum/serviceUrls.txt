@@ -1,10 +1,19 @@
-Identity service : https://localhost:7195
-Notification Service : https://localhost:7108
-Log Service : https://localhost:7181
+Identity service : https://localhost:7195 -> MsSql
+Notification Service : https://localhost:7108 -> Db Yok
+Log Service : https://localhost:7181  -> PostgreSql
+
+Appoinment Service : (rezervasyon! )
+Catalog Servis : (Kuaförler, berberler, güzellik merkezleri,Hizmetler,fiyatlar)
+Payment Service : (Ödeme iþlemleri)
+Product Service : (Ürünler, Stok, kategori,indirimler)
+Order Service : (Sipariþler)
+Basket Service : (Sepet)
+OrderStatus service : (Sipariþ Durumlarý)
+
 
 denemeeee
 Api Gateway : https://localhost:7207
 
-
+RabbitMq : Asenkron haberleþme  
 
 

@@ -10,7 +10,7 @@ namespace Application.Abstractions.TokenServices
 {
     public interface ITokenhandler
     {
-      Token CreateAccessToken(int second, AppUser appUser);   
+      Token CreateAccessToken(int hour, AppUser appUser);   
       string CreateRefreshToken();
     }
 }

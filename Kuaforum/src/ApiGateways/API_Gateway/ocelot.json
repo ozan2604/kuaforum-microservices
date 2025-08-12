@@ -6,17 +6,29 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7195
+          "Port": 7000
+        },
+        {
+          "Host": "localhost",
+          "Port": 7001
+        },
+        {
+          "Host": "localhost",
+          "Port": 7002
         }
       ],
       "UpstreamPathTemplate": "/identity/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }, //YÃ¼k dengeleme algoritmasÄ±; RoundRobin, LeastConnection, etc. kullanabiliriz."
+      
       "AuthenticationOptions": {
         "AllowedScopes": [],
          "AuthenticationProviderKey": "Bearer"
       },
-      "RouteIsCaseSensitive": false, //Harf duyarlýlýðý olmaz; /Auth/Login ve /auth/login ayný route olarak eþleþir.
-      "DangerousAcceptAnyServerCertificateValidator": true // Sertifika doðrulamasý yapýlmaz; bu, geliþtirme ortamýnda kullanýlmalýdýr.
+      "RouteIsCaseSensitive": false, //Harf duyarlï¿½lï¿½ï¿½ï¿½ olmaz; /Auth/Login ve /auth/login aynï¿½ route olarak eï¿½leï¿½ir.
+      "DangerousAcceptAnyServerCertificateValidator": true // Sertifika doï¿½rulamasï¿½ yapï¿½lmaz; bu, geliï¿½tirme ortamï¿½nda kullanï¿½lmalï¿½dï¿½r.
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -31,7 +43,7 @@
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
         "AllowedScopes": [],
-        "AuthenticationProviderKey": "Bearer"  //tokený al
+        "AuthenticationProviderKey": "Bearer"  //tokenï¿½ al
       },
      
       "RouteIsCaseSensitive": false,
@@ -53,9 +65,9 @@
         "AuthenticationProviderKey": "Bearer"
       },
 
-      "RouteClaimsRequirement": {
-        "Role": "Admin" //buraya rolleri atýyoruz. Token rolü karþýlýyor mu
-      },
+      //"RouteClaimsRequirement": {
+      //  "Role": "Admin" //buraya rolleri atï¿½yoruz. Token rolï¿½ karï¿½ï¿½lï¿½yor mu
+      //},
       "RouteIsCaseSensitive": false,
       "DangerousAcceptAnyServerCertificateValidator": true
     }
