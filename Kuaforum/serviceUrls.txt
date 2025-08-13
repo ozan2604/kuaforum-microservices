@@ -13,6 +13,7 @@ OrderStatus service : (Sipariþ Durumlarý)
 
 batuhan denemes
 batuhan denemesi2
+batuhan deneme 3 ----<<<<<<ozaann>>>>>-----
 Api Gateway : https://localhost:7207
 
 RabbitMq : Asenkron haberleþme  
