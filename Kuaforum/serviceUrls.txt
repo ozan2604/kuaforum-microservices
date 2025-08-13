@@ -11,7 +11,7 @@ Basket Service : (Sepet)
 OrderStatus service : (Sipariþ Durumlarý)
 
 
-denemeeeesadfasdf
+denemeeeesadfasdf  sdfasdfasdfsad
 Api Gateway : https://localhost:7207
 
 RabbitMq : Asenkron haberleþme  
