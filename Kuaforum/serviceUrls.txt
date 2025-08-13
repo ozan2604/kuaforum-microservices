@@ -11,7 +11,8 @@ Basket Service : (Sepet)
 OrderStatus service : (Sipariþ Durumlarý)
 
 
-denemeeeesadfasdf  sdfasdfasdfsad
+batuhan denemes
+batuhan denemesi2
 Api Gateway : https://localhost:7207
 
 RabbitMq : Asenkron haberleþme  
