@@ -65,9 +65,15 @@
         "AuthenticationProviderKey": "Bearer"
       },
 
+<<<<<<< Updated upstream
       //"RouteClaimsRequirement": {
       //  "Role": "Admin" //buraya rolleri at�yoruz. Token rol� kar��l�yor mu
       //},
+=======
+      "RouteClaimsRequirement": {
+        "Role": "Admin" //buraya rolleri at�yoruz. Token rol� kar��l�yor mu
+      },
+>>>>>>> Stashed changes
       "RouteIsCaseSensitive": false,
       "DangerousAcceptAnyServerCertificateValidator": true
     }
