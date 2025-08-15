@@ -28,6 +28,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
             LifetimeValidator = (notBefore, expires, token, parameters) => expires != null ? expires > DateTime.UtcNow : false,
             ClockSkew = TimeSpan.Zero,
+            NameClaimType = "userName",
         };
     });
 
