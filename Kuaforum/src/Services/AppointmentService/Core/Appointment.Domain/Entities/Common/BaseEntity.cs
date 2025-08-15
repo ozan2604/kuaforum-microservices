@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Appoinment.Domain.Entites.Common
+namespace Appointment.Domain.Entities.Common
 {
     public class BaseEntity
     {

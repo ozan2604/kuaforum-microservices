@@ -1,12 +1,12 @@
-﻿using Appoinment.Domain.Entites.Common;
-using Appoinment.Domain.Enums;
+﻿using Appointment.Domain.Entities.Common;
+using Appointment.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Appoinment.Domain.Entites
+namespace Appointment.Domain.Entities
 {
     public class Appointment : BaseEntity
     {

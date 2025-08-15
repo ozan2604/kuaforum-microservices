@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Appoinment.Domain.Enums
+namespace Appointment.Domain.Enums
 {
     public enum AppointmentStatus
     {

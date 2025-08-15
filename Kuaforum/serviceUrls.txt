@@ -2,14 +2,14 @@ Identity service : https://localhost:7195 -> MsSql  jwt ,
 Notification Service : https://localhost:7108 -> Db Yok
 Log Service : https://localhost:7181  -> PostgreSql
 
-Appoinment Service : (rezervasyon! )
-Catalog Servis : (Kuaförler, berberler, güzellik merkezleri,Hizmetler,fiyatlar)
+Appointment Service : (rezervasyon! )
+Catalog Servis : (KuafÃ¶rler, berberler, gÃ¼zellik merkezleri,Hizmetler,fiyatlar)
 
-Payment Service : (Ödeme işlemleri)
-Product Service : (Ürünler, Stok, kategori,indirimler)
-Order Service : (Siparişler)
+Payment Service : (Ã–deme iÃ¾lemleri)
+Product Service : (ÃœrÃ¼nler, Stok, kategori,indirimler)
+Order Service : (SipariÃ¾ler)
 Basket Service : (Sepet)
-OrderStatus service : (Sipariş Durumları)
+OrderStatus service : (SipariÃ¾ DurumlarÃ½)
 
 
 batuhan denemes
@@ -17,12 +17,12 @@ batuhan denemesi2
 batuhan deneme 3 ----<<<<<<ozaann>>>>>-----
 Api Gateway : https://localhost:7207
 
-RabbitMq : Asenkron haberleşme  
+RabbitMq : Asenkron haberleÃ¾me  
 
 
 1-> role daha eklenemdi identity servise
-2-> jwt tokenı -> api gateewaye  -> ordan da diğer servislere eklememiz lazım
-3-> catalog yazılmaya devam ediyor : ozan 
-4-> rezervasyon servisinin yazılmaya başlanması
+2-> jwt tokenÃ½ -> api gateewaye  -> ordan da diÃ°er servislere eklememiz lazÃ½m
+3-> catalog yazÃ½lmaya devam ediyor : ozan 
+4-> rezervasyon servisinin yazÃ½lmaya baÃ¾lanmasÃ½
 
 
