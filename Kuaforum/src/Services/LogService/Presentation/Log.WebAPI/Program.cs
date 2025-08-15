@@ -9,6 +9,8 @@ using Serilog.Core;
 using Serilog.Sinks.PostgreSQL;
 using System.Text;
 using MassTransit;
+using Log.WebAPI.Consumers;
+using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,24 +25,42 @@ builder.Services.AddLogPersistenceServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<LogMessageConsumer>();
+    x.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQ:Host"], "/", h =>
+        {
+            h.Username(builder.Configuration["RabbitMQ:Username"]);
+            h.Password(builder.Configuration["RabbitMQ:Password"]);
+        });
+        cfg.ReceiveEndpoint("log-service", e =>
+        {
+            e.ConfigureConsumer<LogMessageConsumer>(ctx);
+        });
+    });
+});
 
 Logger log = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.File("Logs/log.txt")
-    .WriteTo.PostgreSQL(builder.Configuration.GetConnectionString("PostgreSQL"),"logs",needAutoCreateTable: true,
-    columnOptions: new Dictionary<string, ColumnWriterBase>
-    {
-        { "Message", new RenderedMessageColumnWriter() },
-        { "MessageTemplate", new MessageTemplateColumnWriter() },
-        { "Level", new LevelColumnWriter() },
-        { "TimeStamp", new TimestampColumnWriter() },
-        { "Exception", new ExceptionColumnWriter() },
-        { "LogEvent", new LogEventSerializedColumnWriter() },
-        {"Properties", new PropertiesColumnWriter() },
-        {"user_name" , new UsernameColumnWriter() } // Custom column writer for username
-    })
-    .WriteTo.Seq(builder.Configuration["Seq:ServerUrl"]) //, apiKey: builder.Configuration["Seq:ApiKey"]
+    .WriteTo.PostgreSQL(builder.Configuration.GetConnectionString("PostgreSQL"),
+        "logs", needAutoCreateTable: true,
+        columnOptions: new Dictionary<string, ColumnWriterBase>
+        {
+            { "Message", new RenderedMessageColumnWriter() },
+            { "MessageTemplate", new MessageTemplateColumnWriter() },
+            { "Level", new LevelColumnWriter() },
+            { "TimeStamp", new TimestampColumnWriter() },
+            { "Exception", new ExceptionColumnWriter() },
+            { "LogEvent", new LogEventSerializedColumnWriter() },
+            { "Properties", new PropertiesColumnWriter() },
+            { "user_name", new UsernameColumnWriter() },
+            { "service_name", new ServiceNameColumnWriter() },
+            { "action_name", new ActionNameColumnWriter() }
+        })
+    .WriteTo.Seq(builder.Configuration["Seq:ServerUrl"])
     .Enrich.FromLogContext()
     .MinimumLevel.Information()
     .CreateLogger();
@@ -59,26 +79,24 @@ builder.Services.AddHttpLogging(logging =>
 });
 
 builder.Services.AddAuthorization();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
-    AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
     {
         options.TokenValidationParameters = new()
         {
-            ValidateIssuer = true, // tokený kim daðýtýyor (biz)
-            ValidateAudience = true, // tokený kim kullanýyor 
-            ValidateLifetime = true, // tokenýn geçerlilik süresi doðrular
-            ValidateIssuerSigningKey = true, // tokenýn bizim ürettiðimize dair bir key
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
 
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecurityKey"])),
 
             LifetimeValidator = (notBefore, expires, token, parameters) => expires != null ? expires > DateTime.UtcNow : false,
-            // tokenýn süresi geçerli mi
-            ClockSkew = TimeSpan.Zero, // tokenýn süresi geçerli mi
+            ClockSkew = TimeSpan.Zero,
         };
     });
-
 
 var app = builder.Build();
 
@@ -88,21 +106,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseSerilogRequestLogging(); // Loglanmasýný istediðin middlewarelerin üzerine koy
+app.UseSerilogRequestLogging();
 
-app.UseHttpLogging(); // HTTP logging middleware
+app.UseHttpLogging();
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // kendimiz ekliyoruz
+app.UseAuthentication();
 app.UseAuthorization();
-
-
 
 app.Use(async (context, next) =>
 {
-    var username = context.User?.Identity?.IsAuthenticated != null || true ? context.User?.Identity?.Name : null;
-
-    Serilog.Context.LogContext.PushProperty("user_name", username);
+    var username = context.User?.Identity?.IsAuthenticated == true ? context.User.Identity?.Name : null;
+    LogContext.PushProperty("user_name", username);
     await next();
 });
 
