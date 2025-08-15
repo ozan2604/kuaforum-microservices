@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text;
+
+record LogMessage(string? UserName, string? Role, string? OperationName, string Endpoint, string Method);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,24 +17,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
     {
         options.TokenValidationParameters = new ()
         {
-            ValidateIssuer = true, // tokený kim daðýtýyor (biz)
-            ValidateAudience = true, // tokený kim kullanýyor 
-            ValidateLifetime = true, // tokenýn geçerlilik süresi doðrular
-            ValidateIssuerSigningKey = true, // tokenýn bizim ürettiðimize dair bir key
+            ValidateIssuer = true, // tokenÄ± kim daÄŸÄ±tÄ±yor (biz)
+            ValidateAudience = true, // tokenÄ± kim kullanÄ±yor 
+            ValidateLifetime = true, // tokenÄ±n geÃ§erlilik sÃ¼resi doÄŸrular
+            ValidateIssuerSigningKey = true, // tokenÄ±n bizim Ã¼rettiÄŸimize dair bir key
 
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecurityKey"])),
 
             LifetimeValidator = (notBefore, expires, token, parameters) => expires != null ? expires > DateTime.UtcNow : false,
-            // tokenýn süresi geçerli mi
-            ClockSkew = TimeSpan.Zero, // tokenýn süresi geçerli mi
+            // tokenÄ±n sÃ¼resi geÃ§erli mi
+            ClockSkew = TimeSpan.Zero, // tokenÄ±n sÃ¼resi geÃ§erli mi
         };
     });
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient();
 
 
 
@@ -48,12 +52,42 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.Use(async (context, next) =>
+{
+    await next();
+
+    var userName = context.User.FindFirst(ClaimTypes.Name)?.Value;
+    var role = context.User.FindFirst(ClaimTypes.Role)?.Value;
+    var operationName = context.GetEndpoint()?.DisplayName;
+    var endpoint = context.Request.Path.ToString();
+    var method = context.Request.Method;
+
+    var logMessage = new LogMessage(userName, role, operationName, endpoint, method);
+
+    try
+    {
+        var httpClientFactory = context.RequestServices.GetRequiredService<IHttpClientFactory>();
+        var configuration = context.RequestServices.GetRequiredService<IConfiguration>();
+        var client = httpClientFactory.CreateClient();
+        var baseUrl = configuration["ServiceUrls:LogService"];
+
+        if (!string.IsNullOrEmpty(baseUrl))
+        {
+            await client.PostAsJsonAsync($"{baseUrl}/api/logs", logMessage);
+        }
+    }
+    catch
+    {
+        // logging failed; ignore
+    }
+});
 
 app.MapControllers();
 
-await app.UseOcelot(); //Sonda olmasý önemli
+await app.UseOcelot(); //Sonda olmasÄ± Ã¶nemli
 app.UseHttpsRedirection();
 
 app.Run();
