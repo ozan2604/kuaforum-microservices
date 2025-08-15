@@ -12,7 +12,10 @@ public class ActionNameColumnWriter : ColumnWriterBase
 
     public override object GetValue(LogEvent logEvent, IFormatProvider formatProvider = null)
     {
-        var value = logEvent.Properties.FirstOrDefault(x => x.Key == "action_name").Value;
-        return value?.ToString();
+        if (logEvent.Properties.TryGetValue("action_name", out var value) && value is ScalarValue sv && sv.Value is string s)
+        {
+            return s;
+        }
+        return null;
     }
 }

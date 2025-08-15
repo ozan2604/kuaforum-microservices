@@ -12,7 +12,10 @@ public class ServiceNameColumnWriter : ColumnWriterBase
 
     public override object GetValue(LogEvent logEvent, IFormatProvider formatProvider = null)
     {
-        var value = logEvent.Properties.FirstOrDefault(x => x.Key == "service_name").Value;
-        return value?.ToString();
+        if (logEvent.Properties.TryGetValue("service_name", out var value) && value is ScalarValue sv && sv.Value is string s)
+        {
+            return s;
+        }
+        return null;
     }
 }
