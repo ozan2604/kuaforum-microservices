@@ -117,8 +117,10 @@ app.UseAuthorization();
 app.Use(async (context, next) =>
 {
     var username = context.User?.Identity?.IsAuthenticated == true ? context.User.Identity?.Name : null;
-    LogContext.PushProperty("user_name", username);
-    await next();
+    using (Serilog.Context.LogContext.PushProperty("user_name", username ?? "(anonymous)"))
+    {
+        await next();
+    }
 });
 
 app.MapControllers();
