@@ -10,6 +10,7 @@ using System.Text;
 using MassTransit;
 using Log.WebAPI.Consumers;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,9 @@ builder.Services.AddMassTransit(x =>
     x.AddConsumer<LogMessageConsumer>();
     x.UsingRabbitMq((ctx, cfg) =>
     {
-        cfg.Host(builder.Configuration["RabbitMQ:Host"], "/", h =>
+        cfg.Host(builder.Configuration["RabbitMQ:Host"],
+            ushort.Parse(builder.Configuration["RabbitMQ:Port"]), "/",
+            h =>
         {
             h.Username(builder.Configuration["RabbitMQ:Username"]);
             h.Password(builder.Configuration["RabbitMQ:Password"]);
@@ -93,7 +96,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
             LifetimeValidator = (notBefore, expires, token, parameters) => expires != null ? expires > DateTime.UtcNow : false,
             ClockSkew = TimeSpan.Zero,
-            NameClaimType = "userName",
+            NameClaimType = ClaimTypes.Name,
         };
     });
 

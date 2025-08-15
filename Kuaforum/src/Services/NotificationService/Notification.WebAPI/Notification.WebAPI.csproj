@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\KuaforumShared\KuaforumShared.csproj" />
+	  <ProjectReference Include="..\..\..\Shared\KuaforumShared\KuaforumShared.csproj" />
   </ItemGroup>
 
 </Project>

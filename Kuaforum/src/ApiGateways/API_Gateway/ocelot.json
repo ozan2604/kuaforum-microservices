@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamPathTemplate": "/identity/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -22,16 +22,16 @@
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
       }, //Yük dengeleme algoritması; RoundRobin, LeastConnection, etc. kullanabiliriz."
-      
+
       "AuthenticationOptions": {
         "AllowedScopes": [],
-         "AuthenticationProviderKey": "Bearer"
+        "AuthenticationProviderKey": "Bearer"
       },
       "RouteIsCaseSensitive": false, //Harf duyarl�l��� olmaz; /Auth/Login ve /auth/login ayn� route olarak e�le�ir.
       "DangerousAcceptAnyServerCertificateValidator": true // Sertifika do�rulamas� yap�lmaz; bu, geli�tirme ortam�nda kullan�lmal�d�r.
     },
     {
-      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamPathTemplate": "/log/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -43,14 +43,14 @@
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
         "AllowedScopes": [],
-        "AuthenticationProviderKey": "Bearer"  //token� al
+        "AuthenticationProviderKey": "Bearer" //token� al
       },
-     
+
       "RouteIsCaseSensitive": false,
       "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
-      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamPathTemplate": "/notification/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -65,9 +65,10 @@
         "AuthenticationProviderKey": "Bearer"
       },
 
-      "RouteClaimsRequirement": {
-        "Role": "Admin" //buraya rolleri atıyoruz. Token rolü karşılıyor mu
-      },
+      //"RouteClaimsRequirement": {
+      //  "role": "Admin" //buraya rolleri atıyoruz. Token rolü karşılıyor mu
+      //},
+
       "RouteIsCaseSensitive": false,
       "DangerousAcceptAnyServerCertificateValidator": true
     }

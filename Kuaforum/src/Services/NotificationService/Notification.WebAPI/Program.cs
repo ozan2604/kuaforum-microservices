@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Notification.WebAPI;
 using MassTransit;
 using System.Text;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,13 +18,17 @@ builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((ctx, cfg) =>
     {
-        cfg.Host(builder.Configuration["RabbitMQ:Host"], "/", h =>
-        {
-            h.Username(builder.Configuration["RabbitMQ:Username"]);
-            h.Password(builder.Configuration["RabbitMQ:Password"]);
-        });
+        cfg.Host(
+            builder.Configuration["RabbitMQ:Host"],
+            ushort.Parse(builder.Configuration["RabbitMQ:Port"]), "/", h =>
+             {
+                 h.Username(builder.Configuration["RabbitMQ:Username"]);
+                 h.Password(builder.Configuration["RabbitMQ:Password"]);
+             });
     });
 });
+
+
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -43,7 +48,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             LifetimeValidator = (notBefore, expires, token, parameters) => expires != null ? expires > DateTime.UtcNow : false,
             // tokenn sresi geerli mi
             ClockSkew = TimeSpan.Zero, // tokenn sresi geerli mi
-            NameClaimType = "userName",
+            NameClaimType = ClaimTypes.Name, 
         };
     });
 

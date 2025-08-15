@@ -2,38 +2,54 @@
 
 services:
   rabbitmq:
-    image: rabbitmq:3-management  
+    image: rabbitmq:3-management
     container_name: kuaforum-rabbit
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      # HOST:CONTAINER  → dışarıdan 5673 ile eriş, konteyner içinde 5672
+      - "5673:5672"
+      - "15673:15672"
     environment:
       RABBITMQ_DEFAULT_USER: kuaforum
       RABBITMQ_DEFAULT_PASS: Kuaforum!123
-
+    volumes:
+      - rabbitdata:/var/lib/rabbitmq
+    restart: unless-stopped
     networks:
-      - backend 
+      - backend
 
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    ports:
+      - "5341:80"                  # UI: http://localhost:5341
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_ADMINUSERNAME=admin          # opsiyonel, defaults to 'admin'
+      - SEQ_FIRSTRUN_ADMINPASSWORD=Kuaforum!Seq123  # güçlü bir şifre ver
+    volumes:
+      - seqdata:/data
+    restart: unless-stopped
+    networks:
+      - backend                    # diğer servisler seq:80 ile erişebilsin
 
   postgres:
     image: postgres:16
     container_name: postgres-log-db
-    restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1322Eson.
+      POSTGRES_PASSWORD: "1322Eson."
       POSTGRES_DB: KuaforumLogServiceDb
     ports:
       - "5432:5432"
     volumes:
       - pglogdata:/var/lib/postgresql/data
+    restart: unless-stopped
     networks:
       - backend
 
   mssql-identity-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: mssql-identity-db
-    restart: always
     environment:
       SA_PASSWORD: "Eson1322!aA"
       ACCEPT_EULA: "Y"
@@ -42,12 +58,17 @@ services:
       - "1433:1433"
     volumes:
       - identitysql:/var/opt/mssql
+    restart: unless-stopped
     networks:
       - backend
 
 volumes:
   pglogdata:
   identitysql:
+  seqdata:
+  rabbitdata:
 
 networks:
   backend:
+    driver: bridge
+    name: backend

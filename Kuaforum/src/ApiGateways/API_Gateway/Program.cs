@@ -28,7 +28,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
             LifetimeValidator = (notBefore, expires, token, parameters) => expires != null ? expires > DateTime.UtcNow : false,
             ClockSkew = TimeSpan.Zero,
-            NameClaimType = "userName",
+            NameClaimType = ClaimTypes.Name
         };
     });
 
@@ -40,7 +40,8 @@ builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((ctx, cfg) =>
     {
-        cfg.Host(builder.Configuration["RabbitMQ:Host"], "/", h =>
+        cfg.Host(builder.Configuration["RabbitMQ:Host"],
+            ushort.Parse(builder.Configuration["RabbitMQ:Port"]), "/", h =>
         {
             h.Username(builder.Configuration["RabbitMQ:Username"]);
             h.Password(builder.Configuration["RabbitMQ:Password"]);

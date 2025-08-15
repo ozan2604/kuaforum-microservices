@@ -6,7 +6,7 @@ using KuaforumShared;
 
 namespace Notification.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("notification/[controller]")]
     [ApiController]
     public class TestController : ControllerBase
     {
@@ -20,6 +20,26 @@ namespace Notification.WebAPI.Controllers
         }
 
         [Authorize]
+        [HttpGet("ping")]
+        public IActionResult Ping() => Ok("pong");
+
+        [Authorize]
+        [HttpGet("publish-only")]
+        public async Task<IActionResult> PublishOnly([FromServices] IPublishEndpoint pub)
+        {
+            await pub.Publish(new LogMessage
+            {
+                UserName = User.Identity?.Name,
+                ServiceName = "notification",
+                ActionName = "PublishOnly",
+                Level = "Information",
+                Message = "Just publish",
+                TimeStamp = DateTime.UtcNow
+            });
+            return Ok("published");
+        }
+
+        [Authorize]
         [HttpGet("test-mail")]
         public async Task<IActionResult> SendTestMail()
         {
@@ -27,7 +47,7 @@ namespace Notification.WebAPI.Controllers
             try
             {
                 await _emailService.SendEmailAsync(
-                    new[] { "orhangolcur0@gmail.com" },
+                    new[] { "coderozan26@gmail.com" },
                     "Deneme Maili",
                     "Selam! Bu mail NotificationService üzerinden geldi.");
 
