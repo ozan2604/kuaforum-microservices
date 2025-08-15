@@ -12,7 +12,7 @@ namespace Domain.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedDate { get; set; }
 
         public bool IsActive { get; set; } = true;
