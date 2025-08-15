@@ -12,8 +12,11 @@ namespace Log.WebAPI.Configurations.ColumnWriters
 
         public override object GetValue(LogEvent logEvent, IFormatProvider formatProvider = null)
         {
-            var (username, value) = logEvent.Properties.FirstOrDefault(x => x.Key == "user_name");
-            return value?.ToString() ?? null;
+            if (logEvent.Properties.TryGetValue("user_name", out var value) && value is ScalarValue sv && sv.Value is string s)
+            {
+                return s;
+            }
+            return null;
         }
     }
 }
