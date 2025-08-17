@@ -52,6 +52,10 @@ namespace Catalog.Persistence.Contexts
                 e.Property(x => x.AvgRating).HasColumnType("numeric(3,2)");
                 e.Property(x => x.IsActive).HasDefaultValue(true);
 
+                // Geometry (SRID 4326 = WGS84). İstersen "geography(Point,4326)" da kullanabilirsin.
+                //e.Property(x => x.Location)
+                 //.HasColumnType("geometry(Point,4326)");
+
                 // ilişkiler
                 e.HasMany(x => x.Photos).WithOne(x => x.Venue!).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
                 e.HasMany(x => x.Staff).WithOne(x => x.Venue!).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
@@ -60,7 +64,7 @@ namespace Catalog.Persistence.Contexts
                 // indexler
                 e.HasIndex(x => x.City);
                 e.HasIndex(x => x.IsActive);
-                e.HasIndex(x => x.Location).HasMethod("gist"); // geospatial
+               // e.HasIndex(x => x.Location).HasMethod("gist"); // geospatial
             });
 
             // VenuePhoto

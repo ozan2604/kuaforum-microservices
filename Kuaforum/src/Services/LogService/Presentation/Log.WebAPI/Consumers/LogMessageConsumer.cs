@@ -1,19 +1,25 @@
 using KuaforumShared;
 using MassTransit;
-using SLog = Serilog.Log;
+using Microsoft.Extensions.Logging;
 using Serilog.Context;
 
-namespace Log.WebAPI.Consumers;
-
-public class LogMessageConsumer : IConsumer<LogMessage>
+public sealed class LogMessageConsumer : IConsumer<LogMessage>
 {
-    public Task Consume(ConsumeContext<LogMessage> context)
+    private readonly ILogger<LogMessageConsumer> _logger;
+
+    public LogMessageConsumer(ILogger<LogMessageConsumer> logger)
+        => _logger = logger;
+
+    public Task Consume(ConsumeContext<LogMessage> ctx)
     {
-        using (Serilog.Context.LogContext.PushProperty("user_name", context.Message.UserName))
-        using (Serilog.Context.LogContext.PushProperty("service_name", context.Message.ServiceName))
-        using (Serilog.Context.LogContext.PushProperty("action_name", context.Message.ActionName))
+        var m = ctx.Message;
+
+        using (Serilog.Context.LogContext.PushProperty("user_name", m.UserName ?? "(anonymous)"))
+        using (Serilog.Context.LogContext.PushProperty("service_name", m.ServiceName))
+        using (Serilog.Context.LogContext.PushProperty("action_name", m.ActionName))
         {
-            SLog.Information(context.Message.Message);
+            _logger.LogInformation("Received log message from {Service}: {Action}",
+                m.ServiceName, m.ActionName);
         }
 
         return Task.CompletedTask;

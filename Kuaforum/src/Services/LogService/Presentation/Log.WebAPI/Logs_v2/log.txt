@@ -1,0 +1,43 @@
+2025-08-16 23:49:12.391 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-08-16 23:49:12.777 +03:00 [INF] Configured endpoint log-service, Consumer: LogMessageConsumer
+2025-08-16 23:49:12.947 +03:00 [INF] User profile is available. Using 'C:\Users\Ozan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-08-16 23:49:14.443 +03:00 [INF] Now listening on: https://localhost:7181
+2025-08-16 23:49:14.511 +03:00 [INF] Now listening on: http://localhost:5296
+2025-08-16 23:49:14.679 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-08-16 23:49:14.687 +03:00 [INF] Bus started: "rabbitmq://localhost:5673/"
+2025-08-16 23:49:14.689 +03:00 [INF] Hosting environment: Development
+2025-08-16 23:49:14.697 +03:00 [INF] Content root path: C:\Users\Ozan\Desktop\Project\KuaforumMicroservices\Kuaforum\src\Services\LogService\Presentation\Log.WebAPI
+2025-08-16 23:49:16.496 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - null null
+2025-08-16 23:49:17.075 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - 200 null text/html;charset=utf-8 578.5743ms
+2025-08-16 23:49:17.191 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - null null
+2025-08-16 23:49:17.215 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - 200 13756 application/javascript; charset=utf-8 22.8116ms
+2025-08-16 23:49:17.235 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - null null
+2025-08-16 23:49:17.290 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - 200 null text/javascript; charset=UTF-8 55.4755ms
+2025-08-16 23:49:17.749 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - null null
+2025-08-16 23:49:17.770 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 20.9605ms
+2025-08-16 23:51:07.595 +03:00 [INF] Received log message from notification: GET /notification/test/publish-only
+2025-08-16 23:51:33.482 +03:00 [INF] Received log message from notification: SendEmail
+2025-08-16 23:51:33.509 +03:00 [INF] Received log message from notification: GET /notification/test/test-mail
+2025-08-17 00:13:44.939 +03:00 [INF] No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+2025-08-17 00:13:45.444 +03:00 [INF] Configured endpoint log-service, Consumer: LogMessageConsumer
+2025-08-17 00:13:45.642 +03:00 [INF] User profile is available. Using 'C:\Users\Ozan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-08-17 00:13:46.160 +03:00 [INF] Now listening on: https://localhost:7181
+2025-08-17 00:13:46.163 +03:00 [INF] Now listening on: http://localhost:5296
+2025-08-17 00:13:46.294 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-08-17 00:13:46.296 +03:00 [INF] Hosting environment: Development
+2025-08-17 00:13:46.298 +03:00 [INF] Content root path: C:\Users\Ozan\Desktop\Project\KuaforumMicroservices\Kuaforum\src\Services\LogService\Presentation\Log.WebAPI
+2025-08-17 00:13:46.365 +03:00 [INF] Bus started: "rabbitmq://localhost:5673/"
+2025-08-17 00:13:48.556 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - null null
+2025-08-17 00:13:48.785 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - 200 null text/html;charset=utf-8 231.3964ms
+2025-08-17 00:13:49.005 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - null null
+2025-08-17 00:13:49.005 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - null null
+2025-08-17 00:13:49.038 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - 200 13756 application/javascript; charset=utf-8 31.597ms
+2025-08-17 00:13:49.090 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - 200 null text/javascript; charset=UTF-8 84.4913ms
+2025-08-17 00:13:49.545 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - null null
+2025-08-17 00:13:49.918 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 372.7602ms
+2025-08-17 00:14:16.456 +03:00 [INF] Received log message from notification: GET /notification/test/test-mail
+2025-08-17 00:14:16.456 +03:00 [INF] Received log message from notification: SendEmail
+2025-08-17 00:14:31.727 +03:00 [INF] Received log message from notification: GET /notification/test/test-mail
+2025-08-17 00:14:35.166 +03:00 [INF] Received log message from notification: SendEmail
+2025-08-17 00:14:35.181 +03:00 [INF] Received log message from notification: GET /notification/test/test-mail
+2025-08-17 00:20:48.003 +03:00 [INF] Received log message from notification: GET /notification/test/test-mail

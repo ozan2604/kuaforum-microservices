@@ -39,7 +39,7 @@ namespace Notification.WebAPI.Services
                 mail.From = new MailAddress(_configuration["Mail:Username"], "Kuaforüm", System.Text.Encoding.UTF8);
 
                 SmtpClient smtp = new();
-                smtp.Timeout = 10000; // 10 seconds timeout
+                smtp.Timeout = 2000; // 10 seconds timeout
                 smtp.Credentials = new NetworkCredential(_configuration["Mail:Username"], _configuration["Mail:Password"]);
                 smtp.Host = _configuration["Mail:Host"];
                 smtp.Port = Convert.ToInt32(_configuration["Mail:Port"]);

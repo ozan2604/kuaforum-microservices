@@ -27,8 +27,8 @@ namespace Catalog.Domain.Entities
         public required string Country { get; set; }
         public string? PostalCode { get; set; }
 
-        // Konum (PostGIS/NTS Point; SRID 4326)
-        public Point? Location { get; set; }
+        // Konum (PostGIS/NTS Point; SRID 4326) sonra eklenecek
+       // public NetTopologySuite.Geometries.Point? Location { get; set; }
 
         // Rating özetleri
         public decimal AvgRating { get; set; } = 0m;     // 0..5, 2 ondalık

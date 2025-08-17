@@ -47,6 +47,40 @@ services:
     networks:
       - backend
 
+  postgres-catalog:
+    image: postgres:16  # <-- değişti (PostgreSQL 16 + PostGIS 3.4)
+    container_name: postgres-catalog-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "Catalog!123"
+      POSTGRES_DB: KuaforumCatalogServiceDb
+    ports:
+      - "5434:5432"                # DBeaver: localhost:5434
+    volumes:
+      - pgdata_catalog:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - backend
+   
+  postgres-appointment:
+    image: postgres:16                 
+    container_name: postgres-appointment-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "Appointment!123"
+      POSTGRES_DB: KuaforumAppointmentServiceDb
+    ports:
+      - "5435:5432"                    # DBeaver: localhost:5435
+    volumes:
+      - pgdata_appointment:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - backend
+
+
+
+
+
   mssql-identity-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: mssql-identity-db
@@ -67,6 +101,8 @@ volumes:
   identitysql:
   seqdata:
   rabbitdata:
+  pgdata_catalog:
+  pgdata_appointment:
 
 networks:
   backend:

@@ -7,5 +7,5 @@ public class LogMessage
     public string? ActionName { get; set; }
     public string? Level { get; set; }
     public string? Message { get; set; }
-    public DateTime TimeStamp { get; set; }
+    public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
 }
