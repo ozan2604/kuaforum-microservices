@@ -19,7 +19,7 @@ namespace Catalog.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.19")
+                .HasAnnotation("ProductVersion", "9.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -30,9 +30,6 @@ namespace Catalog.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -40,14 +37,17 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -61,14 +61,14 @@ namespace Catalog.Persistence.Migrations
                     b.Property<Guid?>("StaffId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("VenueId")
                         .HasColumnType("uuid");
@@ -88,9 +88,6 @@ namespace Catalog.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -98,11 +95,14 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -110,14 +110,14 @@ namespace Catalog.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -143,9 +143,6 @@ namespace Catalog.Persistence.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("character varying(2000)");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -153,11 +150,14 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -170,21 +170,21 @@ namespace Catalog.Persistence.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
-                    b.Property<List<string>>("Photos")
+                    b.PrimitiveCollection<List<string>>("Photos")
                         .IsRequired()
                         .HasColumnType("jsonb");
 
                     b.Property<int>("Rating")
                         .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -194,7 +194,7 @@ namespace Catalog.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VenueId", "CreateAt");
+                    b.HasIndex("VenueId", "CreatedAt");
 
                     b.ToTable("review", (string)null);
                 });
@@ -209,9 +209,6 @@ namespace Catalog.Persistence.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("character varying(80)");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -219,16 +216,19 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Currency")
                         .IsRequired()
                         .HasMaxLength(3)
                         .HasColumnType("character varying(3)");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("DurationMinutes")
                         .HasColumnType("integer");
@@ -253,14 +253,14 @@ namespace Catalog.Persistence.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric(10,2)");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("VenueId")
                         .HasColumnType("uuid");
@@ -281,9 +281,6 @@ namespace Catalog.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -291,11 +288,14 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -312,14 +312,14 @@ namespace Catalog.Persistence.Migrations
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -348,9 +348,6 @@ namespace Catalog.Persistence.Migrations
                     b.Property<int?>("BufferMinutes")
                         .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -358,11 +355,14 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -402,14 +402,14 @@ namespace Catalog.Persistence.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("character varying(120)");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("VenueId")
                         .HasColumnType("uuid");
@@ -427,9 +427,6 @@ namespace Catalog.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -437,11 +434,14 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -452,14 +452,14 @@ namespace Catalog.Persistence.Migrations
                     b.Property<Guid?>("StaffId1")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -474,9 +474,6 @@ namespace Catalog.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -484,11 +481,14 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -499,14 +499,14 @@ namespace Catalog.Persistence.Migrations
                     b.Property<Guid?>("StaffSkillId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -521,9 +521,6 @@ namespace Catalog.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -531,11 +528,14 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("EndUtc")
                         .HasColumnType("timestamp with time zone");
@@ -555,14 +555,14 @@ namespace Catalog.Persistence.Migrations
                     b.Property<DateTime>("StartUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -577,9 +577,6 @@ namespace Catalog.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -587,11 +584,14 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -610,14 +610,14 @@ namespace Catalog.Persistence.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -646,9 +646,6 @@ namespace Catalog.Persistence.Migrations
                         .HasMaxLength(2)
                         .HasColumnType("character varying(2)");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -656,11 +653,14 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -707,14 +707,14 @@ namespace Catalog.Persistence.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Website")
                         .HasMaxLength(256)
@@ -735,9 +735,6 @@ namespace Catalog.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -745,11 +742,14 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -765,14 +765,14 @@ namespace Catalog.Persistence.Migrations
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -816,9 +816,6 @@ namespace Catalog.Persistence.Migrations
                     b.Property<TimeSpan?>("BreakStart")
                         .HasColumnType("interval");
 
-                    b.Property<DateTimeOffset>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
 
@@ -826,14 +823,17 @@ namespace Catalog.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("DayOfWeek")
                         .HasColumnType("integer");
 
-                    b.Property<DateTimeOffset?>("DeleteAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("DeleteUserId")
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<TimeSpan>("EndTime")
                         .HasColumnType("interval");
@@ -850,14 +850,14 @@ namespace Catalog.Persistence.Migrations
                     b.Property<TimeSpan>("StartTime")
                         .HasColumnType("interval");
 
-                    b.Property<DateTimeOffset?>("UpdateAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid?>("UpdateUserId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UpdateUserName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 

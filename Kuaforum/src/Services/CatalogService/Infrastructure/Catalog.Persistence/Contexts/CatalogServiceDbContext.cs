@@ -163,7 +163,7 @@ namespace Catalog.Persistence.Contexts
                 e.Property(x => x.Photos).HasColumnType("jsonb");
                 e.Property(x => x.IsVerifiedReservation).HasDefaultValue(false);
 
-                e.HasIndex(x => new { x.VenueId, x.CreateAt });
+                e.HasIndex(x => new { x.VenueId, x.CreatedAt });
             });
 
             // Tag
