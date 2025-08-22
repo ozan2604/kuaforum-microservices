@@ -1,26 +1,11 @@
-﻿using Appointment.Domain.Enums;
+using Appointment.Application.Dtos.AppointmentDtos;
+using Appointment.Application.Results;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Appointment.Application.Features.Commands.AppointmentCommands.CreateAppointment
 {
-    public class CreateAppointmentCommandRequest : IRequest<CreateAppointmentCommandResponse>
+    public class CreateAppointmentCommandRequest : IRequest<Result<CreateAppointmentResult>>
     {
-        public Guid CustomerId { get; set; }
-        public Guid VenueId { get; set; }
-        public Guid StaffId { get; set; }
-        public Guid ServiceId { get; set; }
-        public DateTime StartUtc { get; set; }
-        public DateTime EndUtc { get; set; }
-        public string Notes { get; set; }
-        public string CorrelationId { get; set; } 
-        public string VenueName { get; set; } 
-        public string StaffName { get; set; } 
-        public string ServiceName { get; set; } 
-        public decimal PriceAtBooking { get; set; }
+        public CreateAppointmentDto Appointment { get; set; } = null!;
     }
 }

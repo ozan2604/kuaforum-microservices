@@ -1,6 +1,7 @@
-﻿using Appointment.Application.Features.Commands.AppointmentCommands.CreateAppointment;
+using Appointment.Application.Dtos.AppointmentDtos;
+using Appointment.Application.Features.Commands.AppointmentCommands.CreateAppointment;
+using Appointment.Application.Results;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -17,11 +18,14 @@ namespace Appointment.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAppointment([FromBody] CreateAppointmentCommandRequest request)
+        [ProducesResponseType(typeof(Result<CreateAppointmentResult>), (int)HttpStatusCode.Created)]
+        public async Task<IActionResult> CreateAppointment([FromBody] CreateAppointmentDto dto)
         {
+            var result = await _mediator.Send(new CreateAppointmentCommandRequest { Appointment = dto });
+            if (!result.Success)
+                return BadRequest(result);
 
-            CreateAppointmentCommandResponse response = await _mediator.Send(request);
-            return StatusCode((int)HttpStatusCode.Created);
+            return StatusCode((int)HttpStatusCode.Created, result);
         }
     }
 }
