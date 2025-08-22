@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Catalog.Application.Interfaces.Services.VenueServices;
+using Catalog.Application.Dtos.VenueDtos;
 using Catalog.Domain.Entities;
 
 namespace Catalog.Application.Mapping

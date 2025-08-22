@@ -1,5 +1,10 @@
-﻿using Catalog.Application.Interfaces.Services.VenueServices;
-using Microsoft.AspNetCore.Http;
+﻿using Catalog.Application.Dtos.VenueDtos;
+using Catalog.Application.Features.Venues.Commands.CreateVenue;
+using Catalog.Application.Features.Venues.Commands.DeleteVenue;
+using Catalog.Application.Features.Venues.Commands.UpdateVenue;
+using Catalog.Application.Features.Venues.Queries.GetVenueById;
+using Catalog.Application.Features.Venues.Queries.GetVenues;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.WebAPI.Controllers
@@ -8,27 +13,24 @@ namespace Catalog.WebAPI.Controllers
     [ApiController]
     public class VenuesController : ControllerBase
     {
-        private readonly IVenueService _service;
+        private readonly IMediator _mediator;
 
-        public VenuesController(IVenueService service)
+        public VenuesController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var result = await _service.GetByIdAsync(id);
-            if (!result.Success)
-                return NotFound(result);
-
-            return Ok(result);
+            var result = await _mediator.Send(new GetVenueByIdQueryRequest { Id = id });
+            return result.Success ? Ok(result) : NotFound(result);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _service.GetAllAsync();
+            var result = await _mediator.Send(new GetVenuesQueryRequest());
             return Ok(result);
         }
 
@@ -38,7 +40,7 @@ namespace Catalog.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _service.CreateAsync(dto);
+            var result = await _mediator.Send(new CreateVenueCommandRequest { Venue = dto });
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
@@ -48,14 +50,14 @@ namespace Catalog.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _service.UpdateAsync(dto);
+            var result = await _mediator.Send(new UpdateVenueCommandRequest { Venue = dto });
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var result = await _service.DeleteAsync(id);
+            var result = await _mediator.Send(new DeleteVenueCommandRequest { Id = id });
             return result.Success ? Ok(result) : NotFound(result);
         }
     }
