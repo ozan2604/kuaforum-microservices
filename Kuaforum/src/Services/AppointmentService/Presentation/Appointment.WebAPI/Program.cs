@@ -1,9 +1,11 @@
+using Appointment.Application;
 using Appointment.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddAppointmentPersistenceServices(builder.Configuration);
+builder.Services.AddApplicationService();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

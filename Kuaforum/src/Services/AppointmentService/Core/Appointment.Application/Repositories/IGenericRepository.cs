@@ -20,12 +20,12 @@ namespace Appointment.Application.Repositories
         Task<T> GetByIdAsync(Guid id, bool tracking = true);
 
         //Write operations
-        Task<bool> AddAsync(T model);
+        Task<bool> AddAsync(T model, CancellationToken cancellationToken);
         Task<bool> AddRangeAsync(List<T> datas);
         bool Remove(T model);
         bool RemoveRange(T datas);
         Task<bool> RemoveAsync(Guid id);
         bool Update(T model);
-        Task<int> SaveAsync();
+        Task<int> SaveAsync(CancellationToken cancellationToken);
     }
 }

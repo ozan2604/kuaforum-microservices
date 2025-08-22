@@ -1,55 +1,62 @@
 ﻿using MediatR;
-using Appointment.Application.Results;
-using Appointment.Application.Dtos.AppointmentDtos;
-using Appointment.Application.Services.AppointmentServices;
 using Appointment.Application.Features.Commands.AppointmentCommands.CreateAppointment;
+using Appointment.Application.Repositories.AppointmentRepositories;
 
 public class CreateAppointmentCommandHandler
     : IRequestHandler<CreateAppointmentCommandRequest, CreateAppointmentCommandResponse>
 {
-    private readonly IAppointmentService _svc;
+    private readonly IAppointmentRepository _repository;
 
-    public CreateAppointmentCommandHandler(IAppointmentService svc)
+    public CreateAppointmentCommandHandler(IAppointmentRepository repository)
     {
-        _svc = svc;
+        _repository = repository;
     }
 
-    public async Task<CreateAppointmentCommandResponse> Handle(CreateAppointmentCommandRequest request, CancellationToken cancellationToken)
+    public  async Task<CreateAppointmentCommandResponse> Handle(CreateAppointmentCommandRequest request, CancellationToken cancellationToken)
     {
-        var dto = new CreateAppointmentDto
+        var appointment = new Appointment.Domain.Entities.Appointment
         {
-           /// CustomerId = _current.UserId, // context
             VenueId = request.VenueId,
             StaffId = request.StaffId,
             ServiceId = request.ServiceId,
             StartUtc = request.StartUtc,
             EndUtc = request.EndUtc,
             Notes = request.Notes,
-            CorrelationId = request.CorrelationId
+            CorrelationId = request.CorrelationId,
+            Status = Appointment.Domain.Enums.AppointmentStatus.Pending,
+            CreateAt = DateTime.UtcNow,
+            UpdateAt = DateTime.UtcNow,
+            VenueName = request.VenueName,
+            StaffName = request.StaffName,
+            ServiceName = request.ServiceName,
+            DurationMinutes = (int)(request.EndUtc - request.StartUtc).TotalMinutes,
+            PriceAtBooking = request.PriceAtBooking,
+            Currency = "TRY"
         };
 
-        var result = await _svc.CreateAppointmentAsync(dto, cancellationToken);
 
-        if (!result.Success)
-        {
-            // iki seçenek:
-            // 1) DomainException fırlat → global exception middleware HTTP’ye çevirsin
-            // 2) Handler içinde özel mapping yap (aşağıdaki gibi)
-           // throw new BusinessRuleException(result.Message); // tercih 1
-        }
+        await _repository.AddAsync(appointment, cancellationToken);
+        await _repository.SaveAsync(cancellationToken);
 
-        // Success — Data’dan response üret
-        var data = result.Data;
-        return new CreateAppointmentCommandResponse
+        return new()
         {
-            AppointmentId = data.AppointmentId,
-            VenueName = data.VenueName,
-            StaffName = data.StaffName,
-            ServiceName = data.ServiceName,
-            DurationMinutes = data.DurationMinutes,
-            PriceAtBooking = data.PriceAtBooking,
-            Currency = data.Currency,
-            Message = result.Message
+            AppointmentId = appointment.Id,
+            VenueName = appointment.VenueName,
+            StaffName = appointment.StaffName,
+            ServiceName = appointment.ServiceName,
+            DurationMinutes = appointment.DurationMinutes,
+            PriceAtBooking = appointment.PriceAtBooking,
+            Currency = appointment.Currency,
+            CustomerId = appointment.CustomerId,
+            VenueId = appointment.VenueId,
+            StaffId = appointment.StaffId,
+            ServiceId = appointment.ServiceId,
+            StartUtc = appointment.StartUtc,
+            EndUtc = appointment.EndUtc,
+            Notes = appointment.Notes,
+            CorrelationId = appointment.CorrelationId,
+            Message = "Appointment created successfully."
         };
+
     }
 }

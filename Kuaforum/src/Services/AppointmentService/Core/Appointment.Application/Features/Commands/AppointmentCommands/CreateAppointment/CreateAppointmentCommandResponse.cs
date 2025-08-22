@@ -15,6 +15,14 @@ namespace Appointment.Application.Features.Commands.AppointmentCommands.CreateAp
         public int DurationMinutes { get; set; }
         public decimal PriceAtBooking { get; set; }
         public string Currency { get; set; }
-        public string Message { get; set; } = "Appointment created successfully.";
+        public string Message { get; set; }
+        public Guid CustomerId { get; set; }
+        public Guid VenueId { get; set; }
+        public Guid StaffId { get; set; }
+        public Guid ServiceId { get; set; }
+        public DateTime StartUtc { get; set; }
+        public DateTime EndUtc { get; set; }
+        public string Notes { get; set; }
+        public string CorrelationId { get; set; }
     }
 }

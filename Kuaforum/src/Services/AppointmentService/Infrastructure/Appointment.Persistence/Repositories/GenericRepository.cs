@@ -23,7 +23,7 @@ namespace Appointment.Persistence.Repositories
 
         public DbSet<T> Table => _context.Set<T>();
 
-        public async Task<bool> AddAsync(T model)
+        public async Task<bool> AddAsync(T model, CancellationToken cancellationToken)
         {
             EntityEntry<T> entityEntry = await Table.AddAsync(model);
             return entityEntry.State == EntityState.Added;
@@ -89,7 +89,7 @@ namespace Appointment.Persistence.Repositories
             return true;
         }
 
-        public async Task<int> SaveAsync()
+        public async Task<int> SaveAsync(CancellationToken cancellationToken)
             => await _context.SaveChangesAsync();
 
 

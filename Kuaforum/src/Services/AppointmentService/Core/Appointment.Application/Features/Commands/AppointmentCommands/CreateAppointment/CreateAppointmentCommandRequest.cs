@@ -10,12 +10,17 @@ namespace Appointment.Application.Features.Commands.AppointmentCommands.CreateAp
 {
     public class CreateAppointmentCommandRequest : IRequest<CreateAppointmentCommandResponse>
     {
+        public Guid CustomerId { get; set; }
         public Guid VenueId { get; set; }
         public Guid StaffId { get; set; }
         public Guid ServiceId { get; set; }
         public DateTime StartUtc { get; set; }
         public DateTime EndUtc { get; set; }
         public string Notes { get; set; }
-        public string CorrelationId { get; set; } // idempotency (opsiyonel)
+        public string CorrelationId { get; set; } 
+        public string VenueName { get; set; } 
+        public string StaffName { get; set; } 
+        public string ServiceName { get; set; } 
+        public decimal PriceAtBooking { get; set; }
     }
 }

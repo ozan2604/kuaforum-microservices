@@ -1,4 +1,6 @@
-﻿using Appointment.Persistence.Contexts;
+﻿using Appointment.Application.Repositories.AppointmentRepositories;
+using Appointment.Persistence.Contexts;
+using Appointment.Persistence.Repositories.AppointmentRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,8 @@ namespace Appointment.Persistence
             services.AddDbContext<AppointmentServiceDbContext>(options => options.UseNpgsql(Configuration.ConnectionString));
 
             services.AddScoped<AppointmentServiceDbContext>();
+
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         }
     }
 }
