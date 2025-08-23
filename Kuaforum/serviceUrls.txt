@@ -1,6 +1,8 @@
 Identity service : https://localhost:7195 -> MsSql  jwt , 
 Notification Service : https://localhost:7108 -> Db Yok
 Log Service : https://localhost:7181  -> PostgreSql
+Catalog Service : https://localhost:7154  -> PostgreSql
+Appointment Service : https://localhost:7126  -> PostgreSql
 
 Appointment Service : (rezervasyon! )
 Catalog Servis : (Kuaförler, berberler, güzellik merkezleri,Hizmetler,fiyatlar)

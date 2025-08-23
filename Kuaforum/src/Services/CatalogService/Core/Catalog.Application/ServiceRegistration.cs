@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -10,6 +11,7 @@ namespace Catalog.Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
 
             return services;
         }

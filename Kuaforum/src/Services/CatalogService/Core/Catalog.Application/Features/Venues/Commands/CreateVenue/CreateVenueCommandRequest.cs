@@ -6,5 +6,5 @@ namespace Catalog.Application.Features.Venues.Commands.CreateVenue;
 
 public class CreateVenueCommandRequest : IRequest<Result<Guid>>
 {
-    public required VenueDto Venue { get; set; }
+    public required CreateVenueDto Venue { get; set; }
 }

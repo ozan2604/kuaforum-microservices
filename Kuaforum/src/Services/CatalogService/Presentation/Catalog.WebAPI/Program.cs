@@ -10,7 +10,12 @@ builder.Services.AddCatalogPersistenceServices();
 builder.Services.AddCatalogApplicationServices();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+
+builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -23,6 +28,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

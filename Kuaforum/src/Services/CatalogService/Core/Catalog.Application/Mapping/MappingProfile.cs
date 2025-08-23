@@ -9,6 +9,10 @@ namespace Catalog.Application.Mapping
         public MappingProfile()
         {
             CreateMap<VenueDto, Venue>().ReverseMap();
+            CreateMap<CreateVenueDto, Venue>().ReverseMap();
+            CreateMap<UpdateVenueDto, Venue>().ReverseMap();
+            CreateMap<ResultVenueDto, Venue>().ReverseMap();
+
         }
     }
 }

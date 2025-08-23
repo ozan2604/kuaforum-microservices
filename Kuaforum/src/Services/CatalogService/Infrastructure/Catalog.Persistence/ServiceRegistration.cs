@@ -1,8 +1,10 @@
 using Catalog.Application.Repositories;
 using Catalog.Application.Repositories.VenueRepository;
+using Catalog.Application.Services.CurrentUserServices;
 using Catalog.Persistence.Contexts;
 using Catalog.Persistence.Repositories;
 using Catalog.Persistence.Repositories.VenueRepositories;
+using Catalog.Persistence.Services.CurrentUserServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +24,7 @@ namespace Catalog.Persistence
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddScoped<IVenueRepository, VenueRepository>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         }
     }

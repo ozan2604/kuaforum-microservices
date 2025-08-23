@@ -35,7 +35,7 @@ namespace Catalog.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] VenueDto dto)
+        public async Task<IActionResult> Create([FromBody] CreateVenueDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
