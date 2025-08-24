@@ -1,6 +1,7 @@
 using Application.Results;
 using AutoMapper;
 using Catalog.Application.Repositories.VenueRepository;
+using Catalog.Application.Services.CurrentUserServices;
 using MediatR;
 
 namespace Catalog.Application.Features.Venues.Commands.UpdateVenue;
@@ -9,11 +10,13 @@ public class UpdateVenueCommandHandler : IRequestHandler<UpdateVenueCommandReque
 {
     private readonly IVenueRepository _repository;
     private readonly IMapper _mapper;
+    private readonly ICurrentUserService _current;
 
-    public UpdateVenueCommandHandler(IVenueRepository repository, IMapper mapper)
+    public UpdateVenueCommandHandler(IVenueRepository repository, IMapper mapper, ICurrentUserService current)
     {
         _repository = repository;
         _mapper = mapper;
+        _current = current;
     }
 
     public async Task<Result> Handle(UpdateVenueCommandRequest request, CancellationToken cancellationToken)
@@ -25,6 +28,8 @@ public class UpdateVenueCommandHandler : IRequestHandler<UpdateVenueCommandReque
 
         _mapper.Map(dto, entity);
         entity.UpdatedAt = DateTime.UtcNow;
+        entity.UpdateUserId = _current.UserId;
+        entity.UpdateUserName = _current.UserName ?? string.Empty;
 
         var updated = _repository.Update(entity);
         if (!updated)

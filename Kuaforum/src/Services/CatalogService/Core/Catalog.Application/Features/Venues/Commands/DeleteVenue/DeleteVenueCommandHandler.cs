@@ -1,5 +1,6 @@
 using Application.Results;
 using Catalog.Application.Repositories.VenueRepository;
+using Catalog.Application.Services.CurrentUserServices;
 using MediatR;
 
 namespace Catalog.Application.Features.Venues.Commands.DeleteVenue;
@@ -7,10 +8,12 @@ namespace Catalog.Application.Features.Venues.Commands.DeleteVenue;
 public class DeleteVenueCommandHandler : IRequestHandler<DeleteVenueCommandRequest, Result>
 {
     private readonly IVenueRepository _repository;
+    private readonly ICurrentUserService _current;
 
-    public DeleteVenueCommandHandler(IVenueRepository repository)
+    public DeleteVenueCommandHandler(IVenueRepository repository, ICurrentUserService current)
     {
         _repository = repository;
+        _current = current;
     }
 
     public async Task<Result> Handle(DeleteVenueCommandRequest request, CancellationToken cancellationToken)
@@ -19,8 +22,15 @@ public class DeleteVenueCommandHandler : IRequestHandler<DeleteVenueCommandReque
         if (entity == null)
             return Result.FailureResult("Silinecek veri bulunamadı.");
 
-        var removed = _repository.Remove(entity);
-        if (!removed)
+        entity.IsDeleted = true;
+        entity.DeletedAt = DateTime.UtcNow;
+        entity.DeleteUserId = _current.UserId;
+        entity.UpdateUserName = _current.UserName ?? string.Empty;
+        entity.UpdateUserId = _current.UserId;
+        entity.UpdatedAt = DateTime.UtcNow;
+
+        var updated = _repository.Update(entity);
+        if (!updated)
             return Result.FailureResult("Silme başarısız.");
 
         var saved = await _repository.SaveAsync();
