@@ -8,6 +8,11 @@ using Appointment.Persistence.Repositories.BookingRequestRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Appointment.Application.Services.CurrentUserServices;
+using Appointment.Persistence.Services.CurrentUserServices;
+using Appointment.Application.Services.CatalogServices;
+using Appointment.Persistence.Services.CatalogServices;
+using System;
 
 namespace Appointment.Persistence
 {
@@ -22,8 +27,11 @@ namespace Appointment.Persistence
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IAppointmentHistoryRepository, AppointmentHistoryRepository>();
             services.AddScoped<IBookingRequestRepository, BookingRequestRepository>();
-
-
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddHttpClient<ICatalogService, CatalogService>(c =>
+            {
+                c.BaseAddress = new Uri(configuration["ServiceUrls:Catalog"]!);
+            });
         }
     }
 }
