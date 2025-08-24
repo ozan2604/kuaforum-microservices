@@ -4,6 +4,7 @@ using Catalog.Application.Dtos.TagDtos;
 using Catalog.Application.Dtos.ServiceDtos;
 using Catalog.Application.Dtos.StaffDtos;
 using Catalog.Application.Dtos.ReviewDtos;
+using Catalog.Application.Dtos.LikeDtos;
 using Catalog.Domain.Entities;
 
 namespace Catalog.Application.Mapping
@@ -36,6 +37,11 @@ namespace Catalog.Application.Mapping
             CreateMap<CreateReviewDto, Review>().ReverseMap();
             CreateMap<UpdateReviewDto, Review>().ReverseMap();
             CreateMap<ResultReviewDto, Review>().ReverseMap();
+
+            CreateMap<LikeDto, Like>().ReverseMap();
+            CreateMap<CreateLikeDto, Like>().ReverseMap();
+            CreateMap<UpdateLikeDto, Like>().ReverseMap();
+            CreateMap<ResultLikeDto, Like>().ReverseMap();
         }
     }
 }
