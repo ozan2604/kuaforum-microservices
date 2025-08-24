@@ -9,6 +9,9 @@ using Catalog.Application.Dtos.HolidayDtos;
 using Catalog.Application.Dtos.WorkScheduleDtos;
 using Catalog.Application.Dtos.ServicePhotoDtos;
 using Catalog.Application.Dtos.VenuePhotoDtos;
+using Catalog.Application.Dtos.StaffSkillDtos;
+using Catalog.Application.Dtos.StaffServiceDtos;
+using Catalog.Application.Dtos.StaffTimeOffDtos;
 using Catalog.Domain.Entities;
 
 namespace Catalog.Application.Mapping
@@ -66,6 +69,21 @@ namespace Catalog.Application.Mapping
             CreateMap<CreateVenuePhotoDto, VenuePhoto>().ReverseMap();
             CreateMap<UpdateVenuePhotoDto, VenuePhoto>().ReverseMap();
             CreateMap<ResultVenuePhotoDto, VenuePhoto>().ReverseMap();
+
+            CreateMap<StaffSkillDto, StaffSkill>().ReverseMap();
+            CreateMap<CreateStaffSkillDto, StaffSkill>().ReverseMap();
+            CreateMap<UpdateStaffSkillDto, StaffSkill>().ReverseMap();
+            CreateMap<ResultStaffSkillDto, StaffSkill>().ReverseMap();
+
+            CreateMap<StaffServiceDto, StaffService>().ReverseMap();
+            CreateMap<CreateStaffServiceDto, StaffService>().ReverseMap();
+            CreateMap<UpdateStaffServiceDto, StaffService>().ReverseMap();
+            CreateMap<ResultStaffServiceDto, StaffService>().ReverseMap();
+
+            CreateMap<StaffTimeOffDto, StaffTimeOff>().ReverseMap();
+            CreateMap<CreateStaffTimeOffDto, StaffTimeOff>().ReverseMap();
+            CreateMap<UpdateStaffTimeOffDto, StaffTimeOff>().ReverseMap();
+            CreateMap<ResultStaffTimeOffDto, StaffTimeOff>().ReverseMap();
         }
     }
 }
