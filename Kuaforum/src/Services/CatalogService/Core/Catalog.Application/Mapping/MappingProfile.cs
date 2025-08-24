@@ -5,6 +5,8 @@ using Catalog.Application.Dtos.ServiceDtos;
 using Catalog.Application.Dtos.StaffDtos;
 using Catalog.Application.Dtos.ReviewDtos;
 using Catalog.Application.Dtos.LikeDtos;
+using Catalog.Application.Dtos.HolidayDtos;
+using Catalog.Application.Dtos.WorkScheduleDtos;
 using Catalog.Domain.Entities;
 
 namespace Catalog.Application.Mapping
@@ -42,6 +44,16 @@ namespace Catalog.Application.Mapping
             CreateMap<CreateLikeDto, Like>().ReverseMap();
             CreateMap<UpdateLikeDto, Like>().ReverseMap();
             CreateMap<ResultLikeDto, Like>().ReverseMap();
+
+            CreateMap<HolidayDto, Holiday>().ReverseMap();
+            CreateMap<CreateHolidayDto, Holiday>().ReverseMap();
+            CreateMap<UpdateHolidayDto, Holiday>().ReverseMap();
+            CreateMap<ResultHolidayDto, Holiday>().ReverseMap();
+
+            CreateMap<WorkScheduleDto, WorkSchedule>().ReverseMap();
+            CreateMap<CreateWorkScheduleDto, WorkSchedule>().ReverseMap();
+            CreateMap<UpdateWorkScheduleDto, WorkSchedule>().ReverseMap();
+            CreateMap<ResultWorkScheduleDto, WorkSchedule>().ReverseMap();
         }
     }
 }
