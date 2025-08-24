@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Catalog.Application.Dtos.VenueDtos;
+using Catalog.Application.Dtos.TagDtos;
+using Catalog.Application.Dtos.ServiceDtos;
 using Catalog.Domain.Entities;
 
 namespace Catalog.Application.Mapping
@@ -13,6 +15,15 @@ namespace Catalog.Application.Mapping
             CreateMap<UpdateVenueDto, Venue>().ReverseMap();
             CreateMap<ResultVenueDto, Venue>().ReverseMap();
 
+            CreateMap<TagDto, Tag>().ReverseMap();
+            CreateMap<CreateTagDto, Tag>().ReverseMap();
+            CreateMap<UpdateTagDto, Tag>().ReverseMap();
+            CreateMap<ResultTagDto, Tag>().ReverseMap();
+
+            CreateMap<ServiceDto, Service>().ReverseMap();
+            CreateMap<CreateServiceDto, Service>().ReverseMap();
+            CreateMap<UpdateServiceDto, Service>().ReverseMap();
+            CreateMap<ResultServiceDto, Service>().ReverseMap();
         }
     }
 }
