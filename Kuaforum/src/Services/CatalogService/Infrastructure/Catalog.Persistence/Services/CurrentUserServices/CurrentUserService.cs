@@ -27,9 +27,13 @@ namespace Catalog.Persistence.Services.CurrentUserServices
                 var user = _http.HttpContext?.User;
                 if (user == null) return null;
 
-                // Tercih sırası: nameidentifier → sub
+                // Tercih sırası: nameidentifier → sub → user_id → userId → uid → id
                 var id = user.FindFirst(ClaimTypes.NameIdentifier)?.Value
-                      ?? user.FindFirst("sub")?.Value;
+                      ?? user.FindFirst("sub")?.Value
+                      ?? user.FindFirst("user_id")?.Value
+                      ?? user.FindFirst("userId")?.Value
+                      ?? user.FindFirst("uid")?.Value
+                      ?? user.FindFirst("id")?.Value;
 
                 if (Guid.TryParse(id, out var g)) return g;
 
