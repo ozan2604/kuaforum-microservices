@@ -6,6 +6,7 @@ using Catalog.Application.Features.Venues.Queries.GetVenueById;
 using Catalog.Application.Features.Venues.Queries.GetVenues;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Catalog.WebAPI.Controllers
 {
@@ -35,6 +36,7 @@ namespace Catalog.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateVenueDto dto)
         {
             if (!ModelState.IsValid)
@@ -45,6 +47,7 @@ namespace Catalog.WebAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> Update([FromBody] VenueDto dto)
         {
             if (!ModelState.IsValid)
@@ -55,6 +58,7 @@ namespace Catalog.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _mediator.Send(new DeleteVenueCommandRequest { Id = id });
