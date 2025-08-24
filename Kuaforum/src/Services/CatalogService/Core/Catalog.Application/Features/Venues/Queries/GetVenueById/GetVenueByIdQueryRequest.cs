@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Catalog.Application.Features.Venues.Queries.GetVenueById;
 
-public class GetVenueByIdQueryRequest : IRequest<Result<VenueDto>>
+public class GetVenueByIdQueryRequest : IRequest<Result<ResultVenueDto>>
 {
     public Guid Id { get; set; }
 }

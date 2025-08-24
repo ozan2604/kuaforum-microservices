@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Catalog.Application.Features.Venues.Queries.GetVenueById;
 
-public class GetVenueByIdQueryHandler : IRequestHandler<GetVenueByIdQueryRequest, Result<VenueDto>>
+public class GetVenueByIdQueryHandler : IRequestHandler<GetVenueByIdQueryRequest, Result<ResultVenueDto>>
 {
     private readonly IVenueRepository _repository;
     private readonly IMapper _mapper;
@@ -17,13 +17,13 @@ public class GetVenueByIdQueryHandler : IRequestHandler<GetVenueByIdQueryRequest
         _mapper = mapper;
     }
 
-    public async Task<Result<VenueDto>> Handle(GetVenueByIdQueryRequest request, CancellationToken cancellationToken)
+    public async Task<Result<ResultVenueDto>> Handle(GetVenueByIdQueryRequest request, CancellationToken cancellationToken)
     {
         var venue = await _repository.GetByIdAsync(request.Id, false);
         if (venue == null)
-            return Result<VenueDto>.FailureResult("Kayıt bulunamadı.");
+            return Result<ResultVenueDto>.FailureResult("Kayıt bulunamadı.");
 
-        var dto = _mapper.Map<VenueDto>(venue);
-        return Result<VenueDto>.SuccessResult(dto);
+        var dto = _mapper.Map<ResultVenueDto>(venue);
+        return Result<ResultVenueDto>.SuccessResult(dto);
     }
 }

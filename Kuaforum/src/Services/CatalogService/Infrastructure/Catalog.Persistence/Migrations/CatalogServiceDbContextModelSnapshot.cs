@@ -79,7 +79,7 @@ namespace Catalog.Persistence.Migrations
 
                     b.HasIndex("VenueId", "Date");
 
-                    b.ToTable("holiday", (string)null);
+                    b.ToTable("Holidays", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Domain.Entities.Like", b =>
@@ -130,7 +130,7 @@ namespace Catalog.Persistence.Migrations
                     b.HasIndex("VenueId", "UserId")
                         .IsUnique();
 
-                    b.ToTable("like", (string)null);
+                    b.ToTable("Likes", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Domain.Entities.Review", b =>
@@ -196,7 +196,7 @@ namespace Catalog.Persistence.Migrations
 
                     b.HasIndex("VenueId", "CreatedAt");
 
-                    b.ToTable("review", (string)null);
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Domain.Entities.Service", b =>
@@ -272,7 +272,7 @@ namespace Catalog.Persistence.Migrations
                     b.HasIndex("VenueId", "Name")
                         .IsUnique();
 
-                    b.ToTable("service", (string)null);
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Domain.Entities.ServicePhoto", b =>
@@ -330,7 +330,7 @@ namespace Catalog.Persistence.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("service_photo", (string)null);
+                    b.ToTable("ServicePhotos", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Domain.Entities.Staff", b =>
@@ -624,7 +624,7 @@ namespace Catalog.Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("tag", (string)null);
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Domain.Entities.Venue", b =>
@@ -643,8 +643,8 @@ namespace Catalog.Persistence.Migrations
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("character varying(2)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<Guid?>("CreateUserId")
                         .HasColumnType("uuid");
@@ -726,7 +726,7 @@ namespace Catalog.Persistence.Migrations
 
                     b.HasIndex("IsActive");
 
-                    b.ToTable("venue", (string)null);
+                    b.ToTable("venues", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Domain.Entities.VenuePhoto", b =>
@@ -786,7 +786,7 @@ namespace Catalog.Persistence.Migrations
 
                     b.HasIndex("VenueId");
 
-                    b.ToTable("venue_photo", (string)null);
+                    b.ToTable("VenuePhotos", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Domain.Entities.VenueTag", b =>
@@ -801,7 +801,7 @@ namespace Catalog.Persistence.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("venue_tag", (string)null);
+                    b.ToTable("VenueTags", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Domain.Entities.WorkSchedule", b =>
@@ -863,7 +863,7 @@ namespace Catalog.Persistence.Migrations
 
                     b.HasIndex("StaffId", "DayOfWeek");
 
-                    b.ToTable("work_schedule", (string)null);
+                    b.ToTable("WorkSchedules", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Domain.Entities.Holiday", b =>

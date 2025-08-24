@@ -48,7 +48,7 @@ namespace Catalog.WebAPI.Controllers
 
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> Update([FromBody] VenueDto dto)
+        public async Task<IActionResult> Update([FromBody] UpdateVenueDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

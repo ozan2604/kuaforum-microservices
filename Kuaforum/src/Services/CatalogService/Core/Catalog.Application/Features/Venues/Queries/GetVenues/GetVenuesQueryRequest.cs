@@ -4,6 +4,6 @@ using MediatR;
 
 namespace Catalog.Application.Features.Venues.Queries.GetVenues;
 
-public class GetVenuesQueryRequest : IRequest<Result<List<VenueDto>>>
+public class GetVenuesQueryRequest : IRequest<Result<List<ResultVenueDto>>>
 {
 }

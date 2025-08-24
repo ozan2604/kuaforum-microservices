@@ -34,7 +34,7 @@ namespace Catalog.Persistence.Contexts
             
             b.Entity<Venue>(e =>
             {
-                e.ToTable("venue");
+                e.ToTable("venues");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Name).IsRequired().HasMaxLength(200);
                 e.Property(x => x.Type).HasConversion<int>();
@@ -44,7 +44,7 @@ namespace Catalog.Persistence.Contexts
 
                 e.Property(x => x.FullAddress).IsRequired().HasMaxLength(300);
                 e.Property(x => x.City).IsRequired().HasMaxLength(120);
-                e.Property(x => x.Country).IsRequired().HasMaxLength(2);
+                e.Property(x => x.Country).IsRequired().HasMaxLength(50);
                 e.Property(x => x.PostalCode).HasMaxLength(16);
 
                 
@@ -70,7 +70,7 @@ namespace Catalog.Persistence.Contexts
             // VenuePhoto
             b.Entity<VenuePhoto>(e =>
             {
-                e.ToTable("venue_photo");
+                e.ToTable("VenuePhotos");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Url).IsRequired().HasMaxLength(512);
                 e.Property(x => x.IsCover).HasDefaultValue(false);
@@ -91,7 +91,7 @@ namespace Catalog.Persistence.Contexts
             // WorkSchedule
             b.Entity<WorkSchedule>(e =>
             {
-                e.ToTable("work_schedule");
+                e.ToTable("WorkSchedules");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.DayOfWeek).HasConversion<int>();
                 e.Property(x => x.StartTime).HasConversion(
@@ -111,7 +111,7 @@ namespace Catalog.Persistence.Contexts
             
             b.Entity<Holiday>(e =>
             {
-                e.ToTable("holiday");
+                e.ToTable("Holidays");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Date).HasConversion(
                     v => v.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc),
@@ -123,7 +123,7 @@ namespace Catalog.Persistence.Contexts
             // Service
             b.Entity<Service>(e =>
             {
-                e.ToTable("service");
+                e.ToTable("Services");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Name).IsRequired().HasMaxLength(160);
                 e.Property(x => x.Category).HasMaxLength(80);
@@ -140,7 +140,7 @@ namespace Catalog.Persistence.Contexts
             // ServicePhoto
             b.Entity<ServicePhoto>(e =>
             {
-                e.ToTable("service_photo");
+                e.ToTable("ServicePhotos");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Url).IsRequired().HasMaxLength(512);
             });
@@ -148,7 +148,7 @@ namespace Catalog.Persistence.Contexts
             // Like
             b.Entity<Like>(e =>
             {
-                e.ToTable("like");
+                e.ToTable("Likes");
                 e.HasKey(x => x.Id);
                 e.HasIndex(x => new { x.VenueId, x.UserId }).IsUnique(); // kullanıcı başına tek beğeni
             });
@@ -156,7 +156,7 @@ namespace Catalog.Persistence.Contexts
             // Review
             b.Entity<Review>(e =>
             {
-                e.ToTable("review");
+                e.ToTable("Reviews");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Rating).IsRequired();
                 e.Property(x => x.Comment).HasMaxLength(2000);
@@ -169,7 +169,7 @@ namespace Catalog.Persistence.Contexts
             // Tag
             b.Entity<Tag>(e =>
             {
-                e.ToTable("tag");
+                e.ToTable("Tags");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Name).IsRequired().HasMaxLength(64);
                 e.Property(x => x.Type).HasMaxLength(32);
@@ -180,7 +180,7 @@ namespace Catalog.Persistence.Contexts
             // VenueTag (join)
             b.Entity<VenueTag>(e =>
             {
-                e.ToTable("venue_tag");
+                e.ToTable("VenueTags");
                 e.HasKey(x => new { x.VenueId, x.TagId });
                 e.HasOne(x => x.Venue).WithMany(v => v.VenueTags).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
                 e.HasOne(x => x.Tag).WithMany(t => t.VenueTags).HasForeignKey(x => x.TagId).OnDelete(DeleteBehavior.Cascade);

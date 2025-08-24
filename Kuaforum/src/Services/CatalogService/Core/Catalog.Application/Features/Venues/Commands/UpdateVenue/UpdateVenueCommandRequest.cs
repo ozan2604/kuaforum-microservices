@@ -6,5 +6,5 @@ namespace Catalog.Application.Features.Venues.Commands.UpdateVenue;
 
 public class UpdateVenueCommandRequest : IRequest<Result>
 {
-    public required VenueDto Venue { get; set; }
+    public required UpdateVenueDto Venue { get; set; }
 }
