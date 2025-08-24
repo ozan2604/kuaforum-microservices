@@ -8,8 +8,8 @@ namespace Catalog.Domain.Enums
 {
     public enum VenueType
     {
-        Barber , 
-        Hairdresser , 
-        Beauty 
+        Barber = 0, 
+        Hairdresser = 1, 
+        Beauty = 2
     }
 }

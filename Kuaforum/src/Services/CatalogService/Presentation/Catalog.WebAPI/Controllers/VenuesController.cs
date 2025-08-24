@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("catalog/[controller]")]
     [ApiController]
     public class VenuesController : ControllerBase
     {
