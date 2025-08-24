@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddAppointmentPersistenceServices(builder.Configuration);
-builder.Services.AddApplicationService();
+builder.Services.AddAppointmentApplicationServices();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddMassTransit(x =>
