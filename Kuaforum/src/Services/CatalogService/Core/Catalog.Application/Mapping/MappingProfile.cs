@@ -12,6 +12,7 @@ using Catalog.Application.Dtos.VenuePhotoDtos;
 using Catalog.Application.Dtos.StaffSkillDtos;
 using Catalog.Application.Dtos.StaffServiceDtos;
 using Catalog.Application.Dtos.StaffTimeOffDtos;
+using Catalog.Application.Dtos.VenueTagDtos;
 using Catalog.Domain.Entities;
 
 namespace Catalog.Application.Mapping
@@ -84,6 +85,9 @@ namespace Catalog.Application.Mapping
             CreateMap<CreateStaffTimeOffDto, StaffTimeOff>().ReverseMap();
             CreateMap<UpdateStaffTimeOffDto, StaffTimeOff>().ReverseMap();
             CreateMap<ResultStaffTimeOffDto, StaffTimeOff>().ReverseMap();
+            CreateMap<VenueTagDto, VenueTag>().ReverseMap();
+            CreateMap<CreateVenueTagDto, VenueTag>().ReverseMap();
+            CreateMap<ResultVenueTagDto, VenueTag>().ReverseMap();
         }
     }
 }

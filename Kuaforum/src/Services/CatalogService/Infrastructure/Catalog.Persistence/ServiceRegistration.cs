@@ -1,6 +1,7 @@
 using Catalog.Application.Repositories;
 using Catalog.Application.Repositories.VenueRepository;
 using Catalog.Application.Repositories.TagRepository;
+using Catalog.Application.Repositories.VenueTagRepository;
 using Catalog.Application.Repositories.ServiceRepository;
 using Catalog.Application.Repositories.HolidayRepository;
 using Catalog.Application.Repositories.LikeRepository;
@@ -16,6 +17,7 @@ using Catalog.Application.Services.CurrentUserServices;
 using Catalog.Persistence.Contexts;
 using Catalog.Persistence.Repositories;
 using Catalog.Persistence.Repositories.VenueRepositories;
+using Catalog.Persistence.Repositories.VenueTagRepositories;
 using Catalog.Persistence.Repositories.TagRepositories;
 using Catalog.Persistence.Repositories.ServiceRepositories;
 using Catalog.Persistence.Repositories.HolidayRepositories;
@@ -49,6 +51,7 @@ namespace Catalog.Persistence
 
             services.AddScoped<IVenueRepository, VenueRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IVenueTagRepository, VenueTagRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IHolidayRepository, HolidayRepository>();
             services.AddScoped<ILikeRepository, LikeRepository>();
