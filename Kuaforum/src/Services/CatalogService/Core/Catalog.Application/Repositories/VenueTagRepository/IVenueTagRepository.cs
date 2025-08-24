@@ -1,19 +1,13 @@
+﻿using Catalog.Domain.Entities;
 using System;
-
-using Catalog.Domain.Entities;
+using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Catalog.Application.Repositories.VenueTagRepository;
-
-public interface IVenueTagRepository
+namespace Catalog.Application.Repositories.VenueTagRepository
 {
-    IQueryable<VenueTag> Table { get; }
-    IQueryable<VenueTag> GetAll();
-    IQueryable<VenueTag> GetWhere(Expression<Func<VenueTag, bool>> method);
-    Task<VenueTag?> GetByIdsAsync(Guid venueId, Guid tagId);
-    Task<bool> AddAsync(VenueTag entity);
-    bool Remove(VenueTag entity);
-    Task<bool> RemoveByIdsAsync(Guid venueId, Guid tagId);
-    Task<int> SaveAsync();
+    public interface IVenueTagRepository : IGenericRepository<VenueTag>
+    {
+    }
 }

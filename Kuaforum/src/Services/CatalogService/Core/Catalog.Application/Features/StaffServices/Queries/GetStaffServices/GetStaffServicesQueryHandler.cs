@@ -19,7 +19,7 @@ public class GetStaffServicesQueryHandler : IRequestHandler<GetStaffServicesQuer
 
     public async Task<Result<List<ResultStaffServiceDto>>> Handle(GetStaffServicesQueryRequest request, CancellationToken cancellationToken)
     {
-        var entities = await _repository.GetAllAsync(false);
+        var entities =  _repository.GetAll(false);
         var dtos = _mapper.Map<List<ResultStaffServiceDto>>(entities);
         return Result<List<ResultStaffServiceDto>>.SuccessResult(dtos);
     }

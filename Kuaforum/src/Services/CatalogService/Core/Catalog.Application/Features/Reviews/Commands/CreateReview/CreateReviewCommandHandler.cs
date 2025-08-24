@@ -24,7 +24,6 @@ public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommandReq
     public async Task<Result<Guid>> Handle(CreateReviewCommandRequest request, CancellationToken ct)
     {
         var entity = _mapper.Map<Review>(request.Review);
-        entity.UserId = _current.UserId;
         entity.IsActive = true;
         entity.IsDeleted = false;
         entity.CreatedAt = DateTime.UtcNow;

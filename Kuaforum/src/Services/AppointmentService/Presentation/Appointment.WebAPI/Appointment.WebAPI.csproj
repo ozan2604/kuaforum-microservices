@@ -21,4 +21,8 @@
     <ProjectReference Include="..\..\Core\Appointment.Application\Appointment.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

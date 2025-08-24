@@ -19,11 +19,13 @@ public class GetVenueTagByIdQueryHandler : IRequestHandler<GetVenueTagByIdQueryR
 
     public async Task<Result<VenueTagDto>> Handle(GetVenueTagByIdQueryRequest request, CancellationToken cancellationToken)
     {
-        var entity = await _repository.GetByIdsAsync(request.VenueId, request.TagId);
-        if (entity == null)
-            return Result<VenueTagDto>.FailureResult("Kayıt bulunamadı.");
+        return Result<VenueTagDto>.FailureResult("Bu işlem henüz aktif değil.");
 
-        var dto = _mapper.Map<VenueTagDto>(entity);
-        return Result<VenueTagDto>.SuccessResult(dto);
+        //var entity = await _repository.GetByIdAsync(request.VenueId, request.TagId);
+        //if (entity == null)
+        //    return Result<VenueTagDto>.FailureResult("Kayıt bulunamadı.");
+
+        //var dto = _mapper.Map<VenueTagDto>(entity);
+        //return Result<VenueTagDto>.SuccessResult(dto);
     }
 }

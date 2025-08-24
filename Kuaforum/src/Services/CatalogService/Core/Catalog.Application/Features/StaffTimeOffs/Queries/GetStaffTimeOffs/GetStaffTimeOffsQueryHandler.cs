@@ -19,7 +19,7 @@ public class GetStaffTimeOffsQueryHandler : IRequestHandler<GetStaffTimeOffsQuer
 
     public async Task<Result<List<ResultStaffTimeOffDto>>> Handle(GetStaffTimeOffsQueryRequest request, CancellationToken cancellationToken)
     {
-        var entities = await _repository.GetAllAsync(false);
+        var entities =  _repository.GetAll(false);
         var dtos = _mapper.Map<List<ResultStaffTimeOffDto>>(entities);
         return Result<List<ResultStaffTimeOffDto>>.SuccessResult(dtos);
     }

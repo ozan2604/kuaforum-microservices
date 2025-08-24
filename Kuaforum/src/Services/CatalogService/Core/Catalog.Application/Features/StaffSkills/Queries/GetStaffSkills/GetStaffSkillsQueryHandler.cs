@@ -2,6 +2,7 @@ using Application.Results;
 using AutoMapper;
 using Catalog.Application.Dtos.StaffSkillDtos;
 using Catalog.Application.Repositories.StaffSkillRepository;
+using Catalog.Application.Services.CurrentUserServices;
 using MediatR;
 
 namespace Catalog.Application.Features.StaffSkills.Queries.GetStaffSkills;
@@ -11,7 +12,7 @@ public class GetStaffSkillsQueryHandler : IRequestHandler<GetStaffSkillsQueryReq
     private readonly IStaffSkillRepository _repository;
     private readonly IMapper _mapper;
 
-    public GetStaffSkillsQueryHandler(IStaffSkillRepository repository, IMapper mapper)
+    public GetStaffSkillsQueryHandler(IStaffSkillRepository repository, IMapper mapper, ICurrentUserService current)
     {
         _repository = repository;
         _mapper = mapper;
@@ -19,7 +20,8 @@ public class GetStaffSkillsQueryHandler : IRequestHandler<GetStaffSkillsQueryReq
 
     public async Task<Result<List<ResultStaffSkillDto>>> Handle(GetStaffSkillsQueryRequest request, CancellationToken cancellationToken)
     {
-        var entities = await _repository.GetAllAsync(false);
+
+        var entities =  _repository.GetAll(false);
         var dtos = _mapper.Map<List<ResultStaffSkillDto>>(entities);
         return Result<List<ResultStaffSkillDto>>.SuccessResult(dtos);
     }
