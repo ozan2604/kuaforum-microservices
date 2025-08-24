@@ -7,10 +7,12 @@ Appointment Service : https://localhost:7126  -> PostgreSql
 Appointment Service : (rezervasyon! )
 Catalog Servis : (Kuaförler, berberler, güzellik merkezleri,Hizmetler,fiyatlar)
 
-Payment Service : (Ödeme iþlemleri)
-Product Service : (Ürünler, Stok, kategori,indirimler)
-Order Service : (Sipariþler)
-Basket Service : (Sepet)
+
+Payment Service : (Ödeme işlemleri)
+
+Product Service : (Ürünler, Stok, kategori,indirimler).net
+Order Service : (Sipariþler)java 
+Basket Service : (Sepet)go
 OrderStatus service : (Sipariþ Durumlarý)
 
 
