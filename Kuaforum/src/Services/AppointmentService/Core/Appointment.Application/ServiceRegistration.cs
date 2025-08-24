@@ -1,18 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
-namespace Appointment.Application
+namespace Appointment.Application;
+
+public static class ServiceRegistration
 {
-    public static class ServiceRegistiration
+    public static IServiceCollection AddAppointmentApplicationServices(this IServiceCollection services)
     {
-        public static void AddApplicationService(this IServiceCollection services)
-        {
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof
-                (ServiceRegistiration).Assembly));
-        }
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+        return services;
     }
 }
