@@ -24,6 +24,7 @@ namespace Catalog.Persistence.Contexts
         public DbSet<Holiday> Holidays { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<StaffTimeOff> StaffTimeOffs { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder b)
         {
