@@ -36,7 +36,7 @@ namespace Catalog.Domain.Entities
 
 
         // Navigations
-        public ICollection<VenuePhoto> Photos { get; set; } = new List<VenuePhoto>();
+        public ICollection<Image> Images { get; set; } = new List<Image>();
         public ICollection<Staff> Staff { get; set; } = new List<Staff>();
         public ICollection<Service> Services { get; set; } = new List<Service>();
         public ICollection<Review> Reviews { get; set; } = new List<Review>();

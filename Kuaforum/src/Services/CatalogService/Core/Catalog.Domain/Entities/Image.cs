@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 
 namespace Catalog.Domain.Entities
 {
-    public class VenuePhoto : BaseEntity
+    public class Image : BaseEntity
     {
-        public required Guid VenueId { get; set; }
-        public Venue? Venue { get; set; }
-
+       
         public required string Url { get; set; }          // 512 char sınırı config’de
         public bool IsCover { get; set; } = false;
         public int SortOrder { get; set; } = 0;
+
+        public required Guid VenueId { get; set; }
+        public Venue? Venue { get; set; }
+        public required Guid ServiceId { get; set; }
+        public Service? Service { get; set; }
     }
 }

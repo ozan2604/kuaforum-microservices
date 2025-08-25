@@ -9,7 +9,6 @@ namespace Catalog.Domain.Entities
 {
     public class StaffTimeOff : BaseEntity
     {
-        public Guid Id { get; set; }
         public Guid StaffId { get; set; }
         public Staff Staff { get; set; } = null!;
         public DateTime StartUtc { get; set; }

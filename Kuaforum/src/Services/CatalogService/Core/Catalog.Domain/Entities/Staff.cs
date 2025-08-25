@@ -27,11 +27,10 @@ namespace Catalog.Domain.Entities
         public byte[]? RowVersion { get; set; }
 
 
-        public ICollection<StaffSkill> Skills { get; set; } = new List<StaffSkill>();
         public ICollection<WorkSchedule> Schedules { get; set; } = new List<WorkSchedule>();
         public ICollection<Holiday> Holidays { get; set; } = new List<Holiday>();   // full-day
         public ICollection<StaffTimeOff> TimeOffs { get; set; } = new List<StaffTimeOff>(); // saatlik
-        public ICollection<StaffService> StaffServices { get; set; } = new List<StaffService>();
+        public ICollection<Service> services { get; set; } = new List<Service>();
 
 
     }

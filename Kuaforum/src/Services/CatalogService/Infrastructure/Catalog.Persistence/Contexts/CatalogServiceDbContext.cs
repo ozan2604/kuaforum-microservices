@@ -16,17 +16,13 @@ namespace Catalog.Persistence.Contexts
 
         public DbSet<Venue> Venues { get; set; }
         public DbSet<Service> Services { get; set; }
-        public DbSet<VenuePhoto> VenuePhotos { get; set; }
         public DbSet<VenueTag> VenueTags { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        public DbSet<ServicePhoto> ServicePhotos { get; set; }
         public DbSet<WorkSchedule> WorkSchedules { get; set; }
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
         public DbSet<Like> Likes { get; set; }
-        public DbSet<StaffService> StaffServices { get; set; }
-        public DbSet<StaffSkill> StaffSkills { get; set; }
         public DbSet<StaffTimeOff> StaffTimeOffs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder b)
@@ -57,7 +53,7 @@ namespace Catalog.Persistence.Contexts
                  //.HasColumnType("geometry(Point,4326)");
 
                 // ilişkiler
-                e.HasMany(x => x.Photos).WithOne(x => x.Venue!).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
+                e.HasMany(x => x.Images).WithOne(x => x.Venue!).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
                 e.HasMany(x => x.Staff).WithOne(x => x.Venue!).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
                 e.HasMany(x => x.Services).WithOne(x => x.Venue!).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
 
@@ -68,9 +64,9 @@ namespace Catalog.Persistence.Contexts
             });
 
             // VenuePhoto
-            b.Entity<VenuePhoto>(e =>
+            b.Entity<Image>(e =>
             {
-                e.ToTable("VenuePhotos");
+                e.ToTable("Images");
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Url).IsRequired().HasMaxLength(512);
                 e.Property(x => x.IsCover).HasDefaultValue(false);
@@ -83,7 +79,6 @@ namespace Catalog.Persistence.Contexts
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Name).IsRequired().HasMaxLength(120);
                 e.Property(x => x.Surname).IsRequired().HasMaxLength(120);
-                e.Property(x => x.Skills).HasColumnType("jsonb");
                 e.Property(x => x.IsActive).HasDefaultValue(true);
                 e.HasIndex(x => new { x.VenueId, x.IsActive });
             });
@@ -135,14 +130,6 @@ namespace Catalog.Persistence.Contexts
 
                 e.HasIndex(x => new { x.VenueId, x.IsActive });
                 e.HasIndex(x => new { x.VenueId, x.Name }).IsUnique(); // aynı mekanda aynı isimde tek hizmet
-            });
-
-            // ServicePhoto
-            b.Entity<ServicePhoto>(e =>
-            {
-                e.ToTable("ServicePhotos");
-                e.HasKey(x => x.Id);
-                e.Property(x => x.Url).IsRequired().HasMaxLength(512);
             });
 
             // Like
