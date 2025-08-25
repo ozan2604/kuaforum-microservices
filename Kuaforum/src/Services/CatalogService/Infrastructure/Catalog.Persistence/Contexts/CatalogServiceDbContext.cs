@@ -69,8 +69,8 @@ namespace Catalog.Persistence.Contexts
             {
                 e.ToTable("Images");
                 e.HasKey(x => x.Id);
-                e.Property(x => x.Url).IsRequired().HasMaxLength(512);
-                e.Property(x => x.IsCover).HasDefaultValue(false);
+                e.HasOne(x => x.Venue).WithMany(v => v.Images).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
+                e.HasOne(x => x.Service).WithMany(s => s.Images).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
             });
 
             // Staff
@@ -121,6 +121,7 @@ namespace Catalog.Persistence.Contexts
             {
                 e.ToTable("Services");
                 e.HasKey(x => x.Id);
+                e.HasMany(x => x.Images).WithOne(x => x.Service!).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
                 e.Property(x => x.Name).IsRequired().HasMaxLength(160);
                 e.Property(x => x.Category).HasMaxLength(80);
                 e.Property(x => x.DurationMinutes).IsRequired();
