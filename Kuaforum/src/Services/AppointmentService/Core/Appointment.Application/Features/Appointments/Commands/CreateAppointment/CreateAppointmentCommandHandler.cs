@@ -34,6 +34,11 @@ public class CreateAppointmentCommandHandler : IRequestHandler<CreateAppointment
 
         var entity = _mapper.Map<Appointment.Domain.Entities.Appointment>(request.Appointment);
         entity.CustomerId = userId.Value;
+        entity.IsActive = true;
+        entity.IsDeleted = false;
+        entity.CreateAt = DateTime.UtcNow;
+        entity.CreateUserId = _current.UserId;
+        entity.CreateUserName = _current.UserName ?? string.Empty;
 
         if (serviceInfo != null)
         {

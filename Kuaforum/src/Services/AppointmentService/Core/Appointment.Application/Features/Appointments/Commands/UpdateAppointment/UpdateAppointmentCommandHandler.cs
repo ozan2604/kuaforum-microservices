@@ -1,6 +1,7 @@
 using Appointment.Application.Dtos.AppointmentDtos;
 using Appointment.Application.Repositories.AppointmentRepositories;
 using Appointment.Application.Results;
+using Appointment.Application.Services.CurrentUserServices;
 using AutoMapper;
 using MediatR;
 
@@ -10,11 +11,13 @@ public class UpdateAppointmentCommandHandler : IRequestHandler<UpdateAppointment
 {
     private readonly IAppointmentRepository _repository;
     private readonly IMapper _mapper;
+    private readonly ICurrentUserService _current;
 
-    public UpdateAppointmentCommandHandler(IAppointmentRepository repository, IMapper mapper)
+    public UpdateAppointmentCommandHandler(IAppointmentRepository repository, IMapper mapper, ICurrentUserService current)
     {
         _repository = repository;
         _mapper = mapper;
+        _current = current;
     }
 
     public async Task<Result<Guid>> Handle(UpdateAppointmentCommandRequest request, CancellationToken cancellationToken)
@@ -24,6 +27,10 @@ public class UpdateAppointmentCommandHandler : IRequestHandler<UpdateAppointment
             return Result<Guid>.FailureResult("Kayıt bulunamadı.");
 
         _mapper.Map(request.Appointment, entity);
+        entity.UpdateAt = DateTime.UtcNow;
+        entity.UpdateUserId = _current.UserId;
+        entity.UpdateUserName = _current.UserName ?? string.Empty;
+
         var updated = _repository.Update(entity);
         if (!updated)
             return Result<Guid>.FailureResult("Güncelleme başarısız.");

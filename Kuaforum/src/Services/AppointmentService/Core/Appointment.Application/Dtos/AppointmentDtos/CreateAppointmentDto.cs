@@ -4,7 +4,7 @@ namespace Appointment.Application.Dtos.AppointmentDtos;
 
 public class CreateAppointmentDto
 {
-    public Guid CustomerId { get; set; }
+    
     public Guid VenueId { get; set; }
     public Guid StaffId { get; set; }
     public Guid ServiceId { get; set; }
