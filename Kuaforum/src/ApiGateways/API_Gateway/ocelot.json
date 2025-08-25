@@ -4,9 +4,18 @@
       "DownstreamPathTemplate": "/identity/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 7000 },
-        { "Host": "localhost", "Port": 7001 },
-        { "Host": "localhost", "Port": 7002 }
+        {
+          "Host": "localhost",
+          "Port": 7000
+        },
+        {
+          "Host": "localhost",
+          "Port": 7001
+        },
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
       ],
       "UpstreamPathTemplate": "/identity/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
@@ -24,7 +33,10 @@
       "DownstreamPathTemplate": "/log/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 7181 }
+        {
+          "Host": "localhost",
+          "Port": 7181
+        }
       ],
       "UpstreamPathTemplate": "/log/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
@@ -39,9 +51,30 @@
       "DownstreamPathTemplate": "/catalog/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 7154 }
+        {
+          "Host": "localhost",
+          "Port": 7154
+        }
       ],
       "UpstreamPathTemplate": "/catalog/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "AuthenticationOptions": {
+        "AllowedScopes": [],
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "RouteIsCaseSensitive": false,
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "DownstreamPathTemplate": "/appointment/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7126
+        }
+      ],
+      "UpstreamPathTemplate": "/appointment/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
         "AllowedScopes": [],
@@ -54,7 +87,10 @@
       "DownstreamPathTemplate": "/notification/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 7108 }
+        {
+          "Host": "localhost",
+          "Port": 7108
+        }
       ],
       "UpstreamPathTemplate": "/notification/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],

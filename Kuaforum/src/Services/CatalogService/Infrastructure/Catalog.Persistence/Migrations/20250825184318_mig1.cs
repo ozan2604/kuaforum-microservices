@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Catalog.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -14,193 +13,166 @@ namespace Catalog.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "StaffSkills",
+                name: "Tags",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    StaffSkillId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreateUserName = table.Column<string>(type: "text", nullable: false),
                     UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StaffSkills", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StaffSkills_StaffSkills_StaffSkillId",
-                        column: x => x.StaffSkillId,
-                        principalTable: "StaffSkills",
-                        principalColumn: "Id");
+                    table.PrimaryKey("PK_Tags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tag",
+                name: "Venues",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
-                    Type = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreateUserName = table.Column<string>(type: "text", nullable: false),
-                    UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tag", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "venue",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    Phone = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
-                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    Website = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    FullAddress = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
-                    City = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    Phone = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Website = table.Column<string>(type: "text", nullable: true),
+                    FullAddress = table.Column<string>(type: "text", nullable: false),
+                    City = table.Column<string>(type: "text", nullable: false),
                     Town = table.Column<string>(type: "text", nullable: false),
-                    Country = table.Column<string>(type: "character varying(2)", maxLength: 2, nullable: false),
-                    PostalCode = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: true),
-                    AvgRating = table.Column<decimal>(type: "numeric(3,2)", nullable: false),
+                    Country = table.Column<string>(type: "text", nullable: false),
+                    PostalCode = table.Column<string>(type: "text", nullable: true),
+                    AvgRating = table.Column<decimal>(type: "numeric", nullable: false),
                     RatingsCount = table.Column<int>(type: "integer", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreateUserName = table.Column<string>(type: "text", nullable: false),
                     UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_venue", x => x.Id);
+                    table.PrimaryKey("PK_Venues", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "like",
+                name: "Likes",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     VenueId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreateUserName = table.Column<string>(type: "text", nullable: false),
                     UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_like", x => x.Id);
+                    table.PrimaryKey("PK_Likes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_like_venue_VenueId",
+                        name: "FK_Likes_Venues_VenueId",
                         column: x => x.VenueId,
-                        principalTable: "venue",
+                        principalTable: "Venues",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "review",
+                name: "Reviews",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     VenueId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Rating = table.Column<int>(type: "integer", nullable: false),
-                    Comment = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
-                    Photos = table.Column<List<string>>(type: "jsonb", nullable: false),
-                    IsVerifiedReservation = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    Comment = table.Column<string>(type: "text", nullable: true),
+                    Photos = table.Column<List<string>>(type: "text[]", nullable: false),
+                    IsVerifiedReservation = table.Column<bool>(type: "boolean", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreateUserName = table.Column<string>(type: "text", nullable: false),
                     UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_review", x => x.Id);
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_review_venue_VenueId",
+                        name: "FK_Reviews_Venues_VenueId",
                         column: x => x.VenueId,
-                        principalTable: "venue",
+                        principalTable: "Venues",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "service",
+                name: "Services",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     VenueId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
-                    Category = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Category = table.Column<string>(type: "text", nullable: true),
                     DurationMinutes = table.Column<int>(type: "integer", nullable: false),
-                    Price = table.Column<decimal>(type: "numeric(10,2)", nullable: false),
-                    Currency = table.Column<string>(type: "character varying(3)", maxLength: 3, nullable: false),
-                    Gender = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    Currency = table.Column<string>(type: "text", nullable: false),
+                    Gender = table.Column<string>(type: "text", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreateUserName = table.Column<string>(type: "text", nullable: false),
                     UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_service", x => x.Id);
+                    table.PrimaryKey("PK_Services", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_service_venue_VenueId",
+                        name: "FK_Services_Venues_VenueId",
                         column: x => x.VenueId,
-                        principalTable: "venue",
+                        principalTable: "Venues",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "staff",
+                name: "Staffs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     VenueId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
-                    Surname = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Surname = table.Column<string>(type: "text", nullable: false),
                     PhoneNum = table.Column<string>(type: "text", nullable: false),
                     BufferMinutes = table.Column<int>(type: "integer", nullable: true),
                     MaxConcurrentAppointments = table.Column<int>(type: "integer", nullable: false),
@@ -209,175 +181,158 @@ namespace Catalog.Persistence.Migrations
                     RatingAvg = table.Column<decimal>(type: "numeric", nullable: false),
                     RatingCount = table.Column<int>(type: "integer", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "bytea", nullable: true),
-                    Skills = table.Column<ICollection<StaffSkill>>(type: "jsonb", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreateUserName = table.Column<string>(type: "text", nullable: false),
-                    UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_staff", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_staff_venue_VenueId",
-                        column: x => x.VenueId,
-                        principalTable: "venue",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "venue_photo",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    VenueId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Url = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
-                    IsCover = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    SortOrder = table.Column<int>(type: "integer", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreateUserName = table.Column<string>(type: "text", nullable: false),
                     UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_venue_photo", x => x.Id);
+                    table.PrimaryKey("PK_Staffs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_venue_photo_venue_VenueId",
+                        name: "FK_Staffs_Venues_VenueId",
                         column: x => x.VenueId,
-                        principalTable: "venue",
+                        principalTable: "Venues",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "venue_tag",
-                columns: table => new
-                {
-                    VenueId = table.Column<Guid>(type: "uuid", nullable: false),
-                    TagId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_venue_tag", x => new { x.VenueId, x.TagId });
-                    table.ForeignKey(
-                        name: "FK_venue_tag_tag_TagId",
-                        column: x => x.TagId,
-                        principalTable: "tag",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_venue_tag_venue_VenueId",
-                        column: x => x.VenueId,
-                        principalTable: "venue",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "service_photo",
+                name: "VenueTags",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ServiceId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Url = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
+                    VenueId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TagId = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreateUserName = table.Column<string>(type: "text", nullable: false),
+                    UpdateUserName = table.Column<string>(type: "text", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VenueTags", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VenueTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_VenueTags_Venues_VenueId",
+                        column: x => x.VenueId,
+                        principalTable: "Venues",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Url = table.Column<string>(type: "text", nullable: false),
                     IsCover = table.Column<bool>(type: "boolean", nullable: false),
                     SortOrder = table.Column<int>(type: "integer", nullable: false),
+                    VenueId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ServiceId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreateUserName = table.Column<string>(type: "text", nullable: false),
                     UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_service_photo", x => x.Id);
+                    table.PrimaryKey("PK_Images", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_service_photo_service_ServiceId",
+                        name: "FK_Images_Services_ServiceId",
                         column: x => x.ServiceId,
-                        principalTable: "service",
+                        principalTable: "Services",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Images_Venues_VenueId",
+                        column: x => x.VenueId,
+                        principalTable: "Venues",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "holiday",
+                name: "Holidays",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     VenueId = table.Column<Guid>(type: "uuid", nullable: true),
                     StaffId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
                     Reason = table.Column<string>(type: "text", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreateUserName = table.Column<string>(type: "text", nullable: false),
                     UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_holiday", x => x.Id);
+                    table.PrimaryKey("PK_Holidays", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_holiday_staff_StaffId",
+                        name: "FK_Holidays_Staffs_StaffId",
                         column: x => x.StaffId,
-                        principalTable: "staff",
+                        principalTable: "Staffs",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_holiday_venue_VenueId",
+                        name: "FK_Holidays_Venues_VenueId",
                         column: x => x.VenueId,
-                        principalTable: "venue",
+                        principalTable: "Venues",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "StaffServices",
+                name: "ServiceStaff",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    StaffId1 = table.Column<Guid>(type: "uuid", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreateUserName = table.Column<string>(type: "text", nullable: false),
-                    UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
+                    StaffsId = table.Column<Guid>(type: "uuid", nullable: false),
+                    servicesId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StaffServices", x => x.Id);
+                    table.PrimaryKey("PK_ServiceStaff", x => new { x.StaffsId, x.servicesId });
                     table.ForeignKey(
-                        name: "FK_StaffServices_staff_StaffId1",
-                        column: x => x.StaffId1,
-                        principalTable: "staff",
-                        principalColumn: "Id");
+                        name: "FK_ServiceStaff_Services_servicesId",
+                        column: x => x.servicesId,
+                        principalTable: "Services",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ServiceStaff_Staffs_StaffsId",
+                        column: x => x.StaffsId,
+                        principalTable: "Staffs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -390,111 +345,104 @@ namespace Catalog.Persistence.Migrations
                     EndUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Reason = table.Column<string>(type: "text", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreateUserName = table.Column<string>(type: "text", nullable: false),
                     UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StaffTimeOffs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StaffTimeOffs_staff_StaffId",
+                        name: "FK_StaffTimeOffs_Staffs_StaffId",
                         column: x => x.StaffId,
-                        principalTable: "staff",
+                        principalTable: "Staffs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "work_schedule",
+                name: "WorkSchedules",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     StaffId = table.Column<Guid>(type: "uuid", nullable: false),
                     DayOfWeek = table.Column<int>(type: "integer", nullable: false),
-                    StartTime = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    EndTime = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    BreakStart = table.Column<TimeSpan>(type: "interval", nullable: true),
-                    BreakEnd = table.Column<TimeSpan>(type: "interval", nullable: true),
+                    StartTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false),
+                    EndTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false),
+                    BreakStart = table.Column<TimeOnly>(type: "time without time zone", nullable: true),
+                    BreakEnd = table.Column<TimeOnly>(type: "time without time zone", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    CreateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     CreateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreateUserName = table.Column<string>(type: "text", nullable: false),
                     UpdateUserName = table.Column<string>(type: "text", nullable: true),
-                    UpdateAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdateUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DeleteUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_work_schedule", x => x.Id);
+                    table.PrimaryKey("PK_WorkSchedules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_work_schedule_staff_StaffId",
+                        name: "FK_WorkSchedules_Staffs_StaffId",
                         column: x => x.StaffId,
-                        principalTable: "staff",
+                        principalTable: "Staffs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_holiday_StaffId_Date",
-                table: "holiday",
-                columns: new[] { "StaffId", "Date" });
+                name: "IX_Holidays_StaffId",
+                table: "Holidays",
+                column: "StaffId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_holiday_VenueId_Date",
-                table: "holiday",
-                columns: new[] { "VenueId", "Date" });
+                name: "IX_Holidays_VenueId",
+                table: "Holidays",
+                column: "VenueId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_like_VenueId_UserId",
-                table: "like",
-                columns: new[] { "VenueId", "UserId" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_review_VenueId_CreateAt",
-                table: "review",
-                columns: new[] { "VenueId", "CreateAt" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_service_VenueId_IsActive",
-                table: "service",
-                columns: new[] { "VenueId", "IsActive" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_service_VenueId_Name",
-                table: "service",
-                columns: new[] { "VenueId", "Name" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_service_photo_ServiceId",
-                table: "service_photo",
+                name: "IX_Images_ServiceId",
+                table: "Images",
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_staff_VenueId_IsActive",
-                table: "staff",
-                columns: new[] { "VenueId", "IsActive" });
+                name: "IX_Images_VenueId",
+                table: "Images",
+                column: "VenueId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StaffServices_StaffId1",
-                table: "StaffServices",
-                column: "StaffId1");
+                name: "IX_Likes_VenueId",
+                table: "Likes",
+                column: "VenueId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StaffSkills_StaffSkillId",
-                table: "StaffSkills",
-                column: "StaffSkillId");
+                name: "IX_Reviews_VenueId",
+                table: "Reviews",
+                column: "VenueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Services_VenueId",
+                table: "Services",
+                column: "VenueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServiceStaff_servicesId",
+                table: "ServiceStaff",
+                column: "servicesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Staffs_VenueId",
+                table: "Staffs",
+                column: "VenueId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StaffTimeOffs_StaffId",
@@ -502,81 +450,69 @@ namespace Catalog.Persistence.Migrations
                 column: "StaffId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tag_Name",
-                table: "tag",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_venue_City",
-                table: "venue",
+                name: "IX_Venues_City",
+                table: "Venues",
                 column: "City");
 
             migrationBuilder.CreateIndex(
-                name: "IX_venue_IsActive",
-                table: "venue",
+                name: "IX_Venues_IsActive",
+                table: "Venues",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
-                name: "IX_venue_photo_VenueId",
-                table: "venue_photo",
-                column: "VenueId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_venue_tag_TagId",
-                table: "venue_tag",
+                name: "IX_VenueTags_TagId",
+                table: "VenueTags",
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_work_schedule_StaffId_DayOfWeek",
-                table: "work_schedule",
-                columns: new[] { "StaffId", "DayOfWeek" });
+                name: "IX_VenueTags_VenueId",
+                table: "VenueTags",
+                column: "VenueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkSchedules_StaffId",
+                table: "WorkSchedules",
+                column: "StaffId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "holiday");
+                name: "Holidays");
 
             migrationBuilder.DropTable(
-                name: "like");
+                name: "Images");
 
             migrationBuilder.DropTable(
-                name: "review");
+                name: "Likes");
 
             migrationBuilder.DropTable(
-                name: "service_photo");
+                name: "Reviews");
 
             migrationBuilder.DropTable(
-                name: "StaffServices");
-
-            migrationBuilder.DropTable(
-                name: "StaffSkills");
+                name: "ServiceStaff");
 
             migrationBuilder.DropTable(
                 name: "StaffTimeOffs");
 
             migrationBuilder.DropTable(
-                name: "venue_photo");
+                name: "VenueTags");
 
             migrationBuilder.DropTable(
-                name: "venue_tag");
+                name: "WorkSchedules");
 
             migrationBuilder.DropTable(
-                name: "work_schedule");
+                name: "Services");
 
             migrationBuilder.DropTable(
-                name: "service");
+                name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "tag");
+                name: "Staffs");
 
             migrationBuilder.DropTable(
-                name: "staff");
-
-            migrationBuilder.DropTable(
-                name: "venue");
+                name: "Venues");
         }
     }
 }
