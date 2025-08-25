@@ -2,6 +2,7 @@
 using Catalog.Application.Dtos.VenueDtos;
 using Catalog.Application.Dtos.TagDtos;
 using Catalog.Application.Dtos.ServiceDtos;
+using Catalog.Application.Dtos.ImageDtos;
 using Catalog.Application.Dtos.StaffDtos;
 using Catalog.Application.Dtos.ReviewDtos;
 using Catalog.Application.Dtos.LikeDtos;
@@ -31,6 +32,11 @@ namespace Catalog.Application.Mapping
             CreateMap<CreateServiceDto, Service>().ReverseMap();
             CreateMap<UpdateServiceDto, Service>().ReverseMap();
             CreateMap<ResultServiceDto, Service>().ReverseMap();
+            CreateMap<ImageDto, Image>().ReverseMap();
+            CreateMap<CreateImageDto, Image>().ReverseMap();
+            CreateMap<UpdateImageDto, Image>().ReverseMap();
+            CreateMap<ResultImageDto, Image>().ReverseMap();
+
 
             CreateMap<StaffDto, Staff>().ReverseMap();
             CreateMap<CreateStaffDto, Staff>().ReverseMap();
