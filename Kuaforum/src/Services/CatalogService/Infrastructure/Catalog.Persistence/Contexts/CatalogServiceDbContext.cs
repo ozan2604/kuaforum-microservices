@@ -1,10 +1,5 @@
-﻿using Catalog.Domain.Entities;
+using Catalog.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Catalog.Persistence.Contexts
 {
@@ -28,154 +23,137 @@ namespace Catalog.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder b)
         {
-            
             b.Entity<Venue>(e =>
             {
-                e.ToTable("venues");
-                e.HasKey(x => x.Id);
-                e.Property(x => x.Name).IsRequired().HasMaxLength(200);
-                e.Property(x => x.Type).HasConversion<int>();
-                e.Property(x => x.Phone).IsRequired().HasMaxLength(32);
-                e.Property(x => x.Email).HasMaxLength(256);
-                e.Property(x => x.Website).HasMaxLength(256);
+                e.HasMany(x => x.Images)
+                 .WithOne(x => x.Venue!)
+                 .HasForeignKey(x => x.VenueId);
 
-                e.Property(x => x.FullAddress).IsRequired().HasMaxLength(300);
-                e.Property(x => x.City).IsRequired().HasMaxLength(120);
-                e.Property(x => x.Country).IsRequired().HasMaxLength(50);
-                e.Property(x => x.PostalCode).HasMaxLength(16);
+                e.HasMany(x => x.Staff)
+                 .WithOne(x => x.Venue!)
+                 .HasForeignKey(x => x.VenueId);
 
-                
+                e.HasMany(x => x.Services)
+                 .WithOne(x => x.Venue!)
+                 .HasForeignKey(x => x.VenueId);
 
-                e.Property(x => x.AvgRating).HasColumnType("numeric(3,2)");
-                e.Property(x => x.IsActive).HasDefaultValue(true);
+                e.HasMany(x => x.Reviews)
+                 .WithOne(x => x.Venue!)
+                 .HasForeignKey(x => x.VenueId);
 
-                // Geometry (SRID 4326 = WGS84). İstersen "geography(Point,4326)" da kullanabilirsin.
-                //e.Property(x => x.Location)
-                 //.HasColumnType("geometry(Point,4326)");
+                e.HasMany(x => x.Likes)
+                 .WithOne(x => x.Venue!)
+                 .HasForeignKey(x => x.VenueId);
 
-                // ilişkiler
-                e.HasMany(x => x.Images).WithOne(x => x.Venue!).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
-                e.HasMany(x => x.Staff).WithOne(x => x.Venue!).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
-                e.HasMany(x => x.Services).WithOne(x => x.Venue!).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
-
-                // indexler
-                e.HasIndex(x => x.City);
-                e.HasIndex(x => x.IsActive);
-               // e.HasIndex(x => x.Location).HasMethod("gist"); // geospatial
+                e.HasMany(x => x.VenueTags)
+                 .WithOne(x => x.Venue!)
+                 .HasForeignKey(x => x.VenueId);
             });
 
-            // VenuePhoto
             b.Entity<Image>(e =>
             {
-                e.ToTable("Images");
-                e.HasKey(x => x.Id);
-                e.HasOne(x => x.Venue).WithMany(v => v.Images).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
-                e.HasOne(x => x.Service).WithMany(s => s.Images).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
+                e.HasOne(x => x.Venue)
+                 .WithMany(v => v.Images)
+                 .HasForeignKey(x => x.VenueId);
+
+                e.HasOne(x => x.Service)
+                 .WithMany(s => s.Images)
+                 .HasForeignKey(x => x.ServiceId);
             });
 
-            // Staff
             b.Entity<Staff>(e =>
             {
-                e.ToTable("staff");
-                e.HasKey(x => x.Id);
-                e.Property(x => x.Name).IsRequired().HasMaxLength(120);
-                e.Property(x => x.Surname).IsRequired().HasMaxLength(120);
-                e.Property(x => x.IsActive).HasDefaultValue(true);
-                e.HasIndex(x => new { x.VenueId, x.IsActive });
+                e.HasOne(x => x.Venue)
+                 .WithMany(v => v.Staff)
+                 .HasForeignKey(x => x.VenueId);
+
+                e.HasMany(x => x.Schedules)
+                 .WithOne(x => x.Staff!)
+                 .HasForeignKey(x => x.StaffId);
+
+                e.HasMany(x => x.Holidays)
+                 .WithOne(x => x.Staff!)
+                 .HasForeignKey(x => x.StaffId);
+
+                e.HasMany(x => x.TimeOffs)
+                 .WithOne(x => x.Staff!)
+                 .HasForeignKey(x => x.StaffId);
+
+                e.HasMany(x => x.services)
+                 .WithMany(x => x.Staffs);
             });
 
-            // WorkSchedule
             b.Entity<WorkSchedule>(e =>
             {
-                e.ToTable("WorkSchedules");
-                e.HasKey(x => x.Id);
-                e.Property(x => x.DayOfWeek).HasConversion<int>();
-                e.Property(x => x.StartTime).HasConversion(
-                    v => v.ToTimeSpan(), v => TimeOnly.FromTimeSpan(v));
-                e.Property(x => x.EndTime).HasConversion(
-                    v => v.ToTimeSpan(), v => TimeOnly.FromTimeSpan(v));
-                e.Property(x => x.BreakStart).HasConversion(
-                    v => v.HasValue ? v.Value.ToTimeSpan() : (TimeSpan?)null,
-                    v => v.HasValue ? TimeOnly.FromTimeSpan(v.Value) : (TimeOnly?)null);
-                e.Property(x => x.BreakEnd).HasConversion(
-                    v => v.HasValue ? v.Value.ToTimeSpan() : (TimeSpan?)null,
-                    v => v.HasValue ? TimeOnly.FromTimeSpan(v.Value) : (TimeOnly?)null);
-
-                e.HasIndex(x => new { x.StaffId, x.DayOfWeek });
+                e.HasOne(x => x.Staff)
+                 .WithMany(x => x.Schedules)
+                 .HasForeignKey(x => x.StaffId);
             });
 
-            
             b.Entity<Holiday>(e =>
             {
-                e.ToTable("Holidays");
-                e.HasKey(x => x.Id);
-                e.Property(x => x.Date).HasConversion(
-                    v => v.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc),
-                    v => DateOnly.FromDateTime(DateTime.SpecifyKind(v, DateTimeKind.Utc)));
-                e.HasIndex(x => new { x.VenueId, x.Date });
-                e.HasIndex(x => new { x.StaffId, x.Date });
+                e.HasOne(x => x.Venue)
+                 .WithMany()
+                 .HasForeignKey(x => x.VenueId);
+
+                e.HasOne(x => x.Staff)
+                 .WithMany(x => x.Holidays)
+                 .HasForeignKey(x => x.StaffId);
             });
 
-            // Service
             b.Entity<Service>(e =>
             {
-                e.ToTable("Services");
-                e.HasKey(x => x.Id);
-                e.HasMany(x => x.Images).WithOne(x => x.Service!).HasForeignKey(x => x.ServiceId).OnDelete(DeleteBehavior.Cascade);
-                e.Property(x => x.Name).IsRequired().HasMaxLength(160);
-                e.Property(x => x.Category).HasMaxLength(80);
-                e.Property(x => x.DurationMinutes).IsRequired();
-                e.Property(x => x.Price).HasColumnType("numeric(10,2)");
-                e.Property(x => x.Currency).IsRequired().HasMaxLength(3);
-                e.Property(x => x.Gender).HasMaxLength(16);
-                e.Property(x => x.IsActive).HasDefaultValue(true);
+                e.HasOne(x => x.Venue)
+                 .WithMany(x => x.Services)
+                 .HasForeignKey(x => x.VenueId);
 
-                e.HasIndex(x => new { x.VenueId, x.IsActive });
-                e.HasIndex(x => new { x.VenueId, x.Name }).IsUnique(); // aynı mekanda aynı isimde tek hizmet
+                e.HasMany(x => x.Images)
+                 .WithOne(x => x.Service!)
+                 .HasForeignKey(x => x.ServiceId);
+
+                e.HasMany(x => x.Staffs)
+                 .WithMany(x => x.services);
             });
 
-            // Like
             b.Entity<Like>(e =>
             {
-                e.ToTable("Likes");
-                e.HasKey(x => x.Id);
-                e.HasIndex(x => new { x.VenueId, x.UserId }).IsUnique(); // kullanıcı başına tek beğeni
+                e.HasOne(x => x.Venue)
+                 .WithMany(x => x.Likes)
+                 .HasForeignKey(x => x.VenueId);
             });
 
-            // Review
             b.Entity<Review>(e =>
             {
-                e.ToTable("Reviews");
-                e.HasKey(x => x.Id);
-                e.Property(x => x.Rating).IsRequired();
-                e.Property(x => x.Comment).HasMaxLength(2000);
-                e.Property(x => x.Photos).HasColumnType("jsonb");
-                e.Property(x => x.IsVerifiedReservation).HasDefaultValue(false);
-
-                e.HasIndex(x => new { x.VenueId, x.CreatedAt });
+                e.HasOne(x => x.Venue)
+                 .WithMany(x => x.Reviews)
+                 .HasForeignKey(x => x.VenueId);
             });
 
-            // Tag
             b.Entity<Tag>(e =>
             {
-                e.ToTable("Tags");
-                e.HasKey(x => x.Id);
-                e.Property(x => x.Name).IsRequired().HasMaxLength(64);
-                e.Property(x => x.Type).HasMaxLength(32);
-                e.Property(x => x.IsActive).HasDefaultValue(true);
-                e.HasIndex(x => x.Name).IsUnique();
+                e.HasMany(x => x.VenueTags)
+                 .WithOne(x => x.Tag!)
+                 .HasForeignKey(x => x.TagId);
             });
 
-            // VenueTag (join)
             b.Entity<VenueTag>(e =>
             {
-                e.ToTable("VenueTags");
-                e.HasKey(x => new { x.VenueId, x.TagId });
-                e.HasOne(x => x.Venue).WithMany(v => v.VenueTags).HasForeignKey(x => x.VenueId).OnDelete(DeleteBehavior.Cascade);
-                e.HasOne(x => x.Tag).WithMany(t => t.VenueTags).HasForeignKey(x => x.TagId).OnDelete(DeleteBehavior.Cascade);
+                e.HasOne(x => x.Venue)
+                 .WithMany(v => v.VenueTags)
+                 .HasForeignKey(x => x.VenueId);
+
+                e.HasOne(x => x.Tag)
+                 .WithMany(t => t.VenueTags)
+                 .HasForeignKey(x => x.TagId);
+            });
+
+            b.Entity<StaffTimeOff>(e =>
+            {
+                e.HasOne(x => x.Staff)
+                 .WithMany(x => x.TimeOffs)
+                 .HasForeignKey(x => x.StaffId);
             });
         }
-
-
     }
 }
+
